@@ -1,9 +1,11 @@
 // external js: isotope.pkgd.js
 
-$('.grid').isotope({
-  itemSelector: '.grid-item',
-  percentPosition: true,
-  masonry: {
-    columnWidth: '.grid-sizer'
-  }
+$( document ).ready(function() {
+
+  $('.grid').magnificPopup({
+  delegate: '.grid-item', // child items selector, by clicking on it popup will open
+  type: 'image'
+  // other options
+});
+
 });
