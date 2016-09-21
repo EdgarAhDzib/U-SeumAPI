@@ -18,3 +18,52 @@
   height: 100px;
   background-color: #28A9AF;
 }
+
+* { box-sizing: border-box; }
+
+/* force scrollbar, prevents initial gap */
+html {
+  overflow-y: scroll;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+.grid {
+  margin-top: 63px;
+}
+
+/* clear fix */
+.grid:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+/* ---- .element-item ---- */
+
+/* 5 columns, percentage width */
+.grid-item,
+.grid-sizer {
+  width: 18%;
+}
+
+.grid-item {
+  float: left;
+  height: 100px;
+  background: #0D8;
+  background-image: url('../images/guardian1.jpg');
+  background-size: cover;
+  border: 2px solid #333;
+  border-color: hsla(0, 0%, 0%, 0.7);
+  margin-right: 7px;
+  margin-bottom: 15px;
+  margin-left: 8px;
+}
+
+.grid-item--width2 { width: 39%; }
+.grid-item--height2 { height: 200px; }
+
+.grow { transition: all .2s ease-in-out; }
+.grow:hover { transform: scale(1.1); }
