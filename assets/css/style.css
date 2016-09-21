@@ -52,7 +52,6 @@ body {
 .grid-item {
   float: left;
   height: 100px;
-  background: #0D8;
   background-size: contain;
   border: 2px solid #333;
   border-color: hsla(0, 0%, 0%, 0.7);
