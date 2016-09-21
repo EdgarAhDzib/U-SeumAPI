@@ -2,7 +2,6 @@
     box-sizing: border-box;
 }
 
-
 /* force scrollbar, prevents initial gap */
 
 html {
@@ -36,19 +35,12 @@ body {
 .grid {
     margin-top: 20px;
 }
-
-
 /* clear fix */
-
 .grid:after {
     content: '';
     display: block;
     clear: both;
 }
-
-
-/* ---- .element-item ---- */
-
 
 /* 5 columns, percentage width */
 
@@ -84,7 +76,6 @@ body {
 
 .grow { transition: all .2s ease-in-out; }
 .grow:hover { transform: scale(1.1); }
-
 
 .ui.search>.prompt {
     padding: .2em 1em;
