@@ -1,10 +1,17 @@
 
 $( document ).ready(function() {
 
-  $('.grid').magnificPopup({
-  delegate: '.grid-item', // child items selector, by clicking on it popup will open
-  type: 'image'
-  // other options
+
+var $grid = $('.grid').isotope({
+  itemSelector: '.grid-item',
+  percentPosition: true,
+  masonry: {
+    columnWidth: '.grid-sizer'
+  }
+});
+// layout Isotope after each image loads
+$grid.imagesLoaded().progress( function() {
+  $grid.isotope('layout');
 });
 
 });
