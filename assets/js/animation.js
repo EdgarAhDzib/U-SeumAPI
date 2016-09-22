@@ -1,5 +1,11 @@
 $('#logo').on('click', function() {
 
-  $('.ui.sidebar').sidebar('toggle');
+    $('.ui.sidebar').sidebar('toggle');
+
+})
+
+$('#search-icon').on('click', function() {
+
+    $('#searchInput').transition('slide left');
 
 })
