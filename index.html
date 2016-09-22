@@ -7,27 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>U-Seum</title>
 
-    <!-- jQuery -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.js" integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk=" crossorigin="anonymous"></script>
     <!-- Reset.css -->
     <link rel="stylesheet" href="assets/css/reset.css">
     <!-- Semantic UI http://semantic-ui.com/introduction/getting-started.html -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
-    <!-- Masonry -->
-    <script src="https://unpkg.com/masonry-layout@4.1/dist/masonry.pkgd.js"></script>
-    <!-- Isotope -->
-    <script src="https://unpkg.com/isotope-layout@3.0/dist/isotope.pkgd.js"></script>
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
     <!-- Magnificent Popup -->
     <link rel="stylesheet" href="assets/css/magnific-popup.css">
-    <script src="assets/js/jquery.magnific-popup.js"></script>
     <!-- custom scripts -->
     <link rel="stylesheet" href="assets/css/style.css">
-    <script src="assets/js/custom.js" charset="utf-8"></script>
-    <script src="assets/js/animation.js"></script>
-    <script src="assets/js/artmuseum.js"></script>
-
 
 </head>
 
@@ -51,11 +38,11 @@
                         <img src="assets/images/useum_logo.png" alt="Useum logo" id="logo" />
                     </div>
                     <div class="right menu">
-                        <div class="ui search item">
-                          <input class="prompt" type="text" name="searchBar" placeholder="Search...">
+                        <div class="ui search item transition hidden" id="searchInput">
+                            <input class="prompt" type="text" name="searchBar" placeholder="Search...">
                         </div>
                         <div class="item submit">
-                            <i class="search link icon"></i>
+                            <i class="search link icon" id="search-icon"></i>
                         </div>
                         <a href="#" class="ui item">
                           Sign-in
@@ -68,21 +55,20 @@
         <div class="ui container">
           <div class="grid">
             <div class="grid-sizer"></div>
-            <div class="grow grid-item grid-item--width2" href="assets/images/guardian1.jpg" id="rmBlock0"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/orange-tree.jpg" /></div>
-            <div class="grow grid-item grid-item--width2" href="assets/images/guardian1.jpg" id="rmBlock1"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/orange-tree.jpg" /></div>
-            <div class="grow grid-item" href="assets/images/guardian1.jpg" id="rmBlock2"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/orange-tree.jpg" /></div>
-            <div class="grow grid-item grid-item--height2" href="assets/images/guardian1.jpg" id="rmBlock3"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/orange-tree.jpg" /></div>
-            <div class="grow grid-item grid-item--width2 grid-item--height2" href="assets/images/guardian1.jpg" id="rmBlock4"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/orange-tree.jpg" /></div>
-            <div class="grow grid-item grid-item--width2" href="assets/images/guardian1.jpg" id="rmBlock5"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/orange-tree.jpg" /></div>
-            <div class="grow grid-item grid-item--width2" href="assets/images/guardian1.jpg" id="rmBlock6"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/orange-tree.jpg" /></div>
-            <div class="grow grid-item grid-item--height2" href="assets/images/guardian1.jpg"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/orange-tree.jpg" /></div>
-            <div class="grow grid-item grid-item--height2" href="assets/images/guardian1.jpg"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/orange-tree.jpg" /></div>
-            <div class="grow grid-item grid-item--width2 grid-item--height2" href="assets/images/guardian1.jpg"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/orange-tree.jpg" /></div>
-            <div class="grow grid-item grid-item--height2" href="assets/images/guardian1.jpg"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/orange-tree.jpg" /></div>
-            <div class="grow grid-item grid-item--width2" href="assets/images/guardian1.jpg"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/orange-tree.jpg" /></div>
-            <div class="grow grid-item grid-item--width2" href="assets/images/guardian1.jpg"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/orange-tree.jpg" /></div>
-            <div class="grow grid-item" href="assets/images/guardian1.jpg"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/orange-tree.jpg" /></div>
-
+            <div class="grow grid-item grid-item--width2" id="rmBlock0"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/orange-tree.jpg" /></div>
+            <div class="grow grid-item grid-item--width2" id="rmBlock1"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/orange-tree.jpg" /></div>
+            <div class="grow grid-item" id="rmBlock2"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/orange-tree.jpg" /></div>
+            <div class="grow grid-item grid-item--height2" id="rmBlock3"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/orange-tree.jpg" /></div>
+            <div class="grow grid-item grid-item--width2 grid-item--height2" id="rmBlock4"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/orange-tree.jpg" /></div>
+            <div class="grow grid-item grid-item--width2" id="rmBlock5"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/orange-tree.jpg" /></div>
+            <div class="grow grid-item grid-item--width2" id="rmBlock6"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/orange-tree.jpg" /></div>
+            <div class="grow grid-item grid-item--height2" id="hamBlock0"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/orange-tree.jpg" /></div>
+            <div class="grow grid-item grid-item--height2" id="hamBlock1"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/orange-tree.jpg" /></div>
+            <div class="grow grid-item grid-item--width2 grid-item--height2" id="hamBlock2"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/orange-tree.jpg" /></div>
+            <div class="grow grid-item grid-item--height2" id="hamBlock3"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/orange-tree.jpg" /></div>
+            <div class="grow grid-item grid-item--width2" id="hamBlock4"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/orange-tree.jpg" /></div>
+            <div class="grow grid-item grid-item--width2" id="hamBlock5"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/orange-tree.jpg" /></div>
+            <div class="grow grid-item" id="hamBlock6"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/orange-tree.jpg" /></div>
             </div>
         </div>
 
@@ -99,6 +85,17 @@
             </div>
         </footer>
     </div>
+    <!-- jQuery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.js" integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk=" crossorigin="anonymous"></script>
+    <script src="assets/js/jquery.magnific-popup.js"></script>
+    <!-- Masonry -->
+    <script src="https://unpkg.com/masonry-layout@4.1/dist/masonry.pkgd.js"></script>
+    <!-- Isotope -->
+    <script src="https://unpkg.com/isotope-layout@3.0/dist/isotope.pkgd.js"></script>
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+    <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+    <script src="assets/js/artmuseum.js"></script>
 </body>
 
 </html>
