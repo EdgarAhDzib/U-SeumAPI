@@ -5,9 +5,11 @@ $('#logo').on('click', function() {
 });
 
 var RMapiKey = "T6Z2QzWq";
+var query = "";
+
 
 $(".submit").on("click", function(){
-var query = $("input:text[name=searchBar]").val().trim();
+query = $("input:text[name=searchBar]").val().trim();
 
 	if (query === "") {
     	$('#searchInput').transition('slide left');
