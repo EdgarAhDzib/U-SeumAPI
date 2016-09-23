@@ -13,6 +13,13 @@ body {
     font-family: sans-serif;
 }
 
+ul {
+  list-style: none;
+}
+ul li {
+  margin-left: 3px;
+}
+
 .header {
     height: 60px;
     background-color: #28A9AF;
@@ -29,8 +36,26 @@ body {
 }
 
 .footer {
-    height: 100px;
+    /*height: 150px;*/  /* Leaving in case we want to define a height later */
     background-color: #28A9AF;
+    color: #ffffff;
+}
+
+.footer-list {
+  font-weight: 600;
+}
+
+.social-media {
+    list-style-type: none;
+    overflow: hidden;
+}
+
+.social-media li {
+    float: left;
+}
+
+.social-media li i {
+    margin-right: 4px;
 }
 
 .grid {
