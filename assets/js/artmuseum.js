@@ -253,5 +253,3 @@ function wikipedia(argument,div) {
 	}
 });
 }
-
-//});
