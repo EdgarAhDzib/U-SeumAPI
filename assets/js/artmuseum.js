@@ -1,7 +1,7 @@
 $(document).ready( function(){
 
 $('#logo').on('click', function() {
-    $('.ui.sidebar').sidebar('toggle');
+    $('.ui.sidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle')
 });
 
 var RMapiKey = "T6Z2QzWq";

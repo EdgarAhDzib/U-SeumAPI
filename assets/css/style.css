@@ -2,6 +2,7 @@
     box-sizing: border-box;
 }
 
+
 /* force scrollbar, prevents initial gap */
 
 html {
@@ -35,12 +36,16 @@ body {
 .grid {
     margin-top: 20px;
 }
+
+
 /* clear fix */
+
 .grid:after {
     content: '';
     display: block;
     clear: both;
 }
+
 
 /* 5 columns, percentage width */
 
@@ -49,33 +54,44 @@ body {
 }
 
 .grid-item {
-  float: left;
-  height: 100px;
-  background-size: contain;
-  border: 2px solid #333;
-  border-color: hsla(0, 0%, 0%, 0.7);
-  margin-right: 7px;
-  margin-bottom: 15px;
-  margin-left: 8px;
-}
-.grid-item img {
-  object-fit: cover;
-  display: block;
-  width: 100%;
-  height: 96px;
+    float: left;
+    height: 100px;
+    background-size: contain;
+    border: 2px solid #333;
+    border-color: hsla(0, 0%, 0%, 0.7);
+    margin-right: 7px;
+    margin-bottom: 15px;
+    margin-left: 8px;
 }
 
-.grid-item--width2 { width: 39%; }
-.grid-item--height2 { height: 200px; }
+.grid-item img {
+    object-fit: cover;
+    display: block;
+    width: 100%;
+    height: 96px;
+}
+
+.grid-item--width2 {
+    width: 39%;
+}
+
+.grid-item--height2 {
+    height: 200px;
+}
 
 .grid-item--height2 img {
-  object-fit: cover;
-  display: block;
-  height: 196px;
+    object-fit: cover;
+    display: block;
+    height: 196px;
 }
 
-.grow { transition: all .2s ease-in-out; }
-.grow:hover { transform: scale(1.1); }
+.grow {
+    transition: all .2s ease-in-out;
+}
+
+.grow:hover {
+    transform: scale(1.1);
+}
 
 .ui.search>.prompt {
     padding: .2em 1em;
@@ -83,4 +99,12 @@ body {
 
 .ui.text.menu {
     margin-top: 0px;
+}
+
+.sidebar-icon {
+    margin-right: 5px;
+}
+
+.sidebar-text {
+    font-size: 18px;
 }
