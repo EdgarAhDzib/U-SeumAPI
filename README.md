@@ -1,4 +1,8 @@
-# ArtMuseumAPI
+# U-SeumAPI
+
+## What is U-seum?
+
+## Best way to use U-seum!
 
 ## Trello
 
@@ -8,7 +12,7 @@
 
 We should use a priority system to help us communicate and manage what is important to the project. A simple break-down of what the labels represent are as follows:
 
-* Labels 
+* Labels
   * Red - High Priorty
   * Yellow - Normal Priority
   * Green - Low Priority
