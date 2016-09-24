@@ -13,7 +13,7 @@ $(document).ready( function(){
 	var New_image = "";
 	var RM = false;
 
-	autoload();
+	//autoload();
 
 	function parse_title(string) {
 		var milk = string;
