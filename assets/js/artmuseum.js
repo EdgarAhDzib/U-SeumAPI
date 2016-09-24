@@ -10,6 +10,16 @@ $(document).ready( function(){
 	var Wiki_blurb = 'aoisdjf;oiajwf;oaijewfoaiwjefaoiefja;oewfj;aiefj;aowiefjoiawef;<br>oiajwef;oiajwef;oaijwef';
 	var Wikilink = 'Hot Air Balloons';
 	var New_image = "";
+	var RM = false;
+
+	function parse_title(string) {
+		var milk = string;
+		var res = milk.split(",");
+		for (index in res) {
+			console.log("res " + index + ": " + res[index]);
+		}
+	  return res[2];
+	}
 
 
   //When user trys to expand our div, we get the information embedded in the data-attr to populate our caption
@@ -24,9 +34,21 @@ $(document).ready( function(){
 			Title = title;
 			console.log(title);
 
-			var century = $(this).find('.hide').data('century');
-			Century = "21";
-			console.log("century: " + century);
+			var source = $(this).find('.hide').data('source');
+			if (source == "RM") {
+				RM = true;
+			} else {
+				RM = false;
+			}
+			var time = $(this).find('.hide').data('century');
+			var matches = time.match(/\d+/g);
+				if (matches != null) {
+					console.log("is a number");
+					Century = time;
+				} else {
+				Century = "Unknown";
+				}
+			console.log("century: " + time);
 
 			var culture = $(this).find('.hide').data('culture');
 			Culture = "Unknown";
@@ -69,7 +91,12 @@ $(document).ready( function(){
 	      var HTML_part3 = '</i><sub> by '; //artist
 	      var HTML_part4 = '</sub></p><p>'; //culture
 	      var HTML_part5 = '<sub> culture</sub></p><p><i>'; //century
-	      var HTML_part6 = '<sup>st</sup></i><sub> century</p><p>'; // sourcelink
+				if (RM) {
+				console.log("RM is true");
+	      var HTML_part6 = '</i><sub> time period</p><p>'; // sourcelink
+				} else {
+				var HTML_part6 = '<sup>st</sup></i><sub> century</p><p>'
+				}
 	      var HTML_part7 = '<sub>source</sub></p><p><em>'; //wiki_blurb
 	      var HTML_part8 = '</em><sub>summary</sub></p><p>'; //wikilink
 	      var HTML_part9 = '<sub> wiki-link</sub></p><p>'; //creditline
@@ -84,6 +111,7 @@ $(document).ready( function(){
 	      var sourcelink = Sourcelink;
 	      var wiki_blurb = Wiki_blurb;
 	      var wikilink = Wikilink;
+				RM = false;
 
 
 	      var new_image = New_image;
@@ -127,13 +155,18 @@ $.ajax({
 	url: RMurl,
 	method: 'GET',
 }).done(function(result) {
+	console.log("in RM");
+	RM = true;
 	var listLength = result.artObjects.length;
 	var artObj = result.artObjects;
 	for (i=0; i<listLength; i++) {
 		if (artObj[i].hasImage === true && artObj[i].webImage != null) {
 			var RMdiv = $("<div>");
 			RMdiv.attr("class","hide");
-			$(RMdiv).attr("data-title",artObj[i].longTitle + " " + artObj[i].principalOrFirstMaker + " " + query);
+			$(RMdiv).attr("data-title",artObj[i].title);
+			//console.log("long title: " + artObj[i].longTitle);
+			var timeperiod = parse_title(artObj[i].longTitle);
+			//console.log(artObj[i].longTitle);
 			var imageCell = $("<img>");
 			imageCell.attr("class","thumbnail");
 			imageCell.attr("src",artObj[i].webImage.url);
@@ -141,8 +174,10 @@ $.ajax({
 			var maker = artObj[i].principalOrFirstMaker + "<br>";
 			var museum = "Rijksmuseum, The Netherlands<br>";
 
-			//Add link to original page
 			$(RMdiv).attr("data-artist",artObj[i].principalOrFirstMaker);
+			$(RMdiv).attr("data-source","RM");
+			$(RMdiv).attr("data-century",timeperiod);
+
 
 
 			$("#rmBlock"+i).html(imageCell).attr("href",artObj[i].webImage.url);
@@ -176,12 +211,13 @@ $.ajax({
 			if (hamResult[i].century !== null) {
 			$(HAMdiv).attr("data-century", hamResult[i].century);
 			} else {
-			$(HAMdiv).attr("data-century", "Unknown Century");
+			$(HAMdiv).attr("data-century", "Unknownd");
 			}
 			$(HAMdiv).attr("data-culture", hamResult[i].culture);
 			$(HAMdiv).attr("data-creditline", hamResult[i].creditline);
 			$(HAMdiv).attr("data-sourcelink", hamResult[i].url);
-			console.log(hamResult[i]);
+			$(HAMdiv).attr("data-source", "HAM");
+			//console.log(hamResult[i]);
 			var title = hamResult[i].title + "<br>";
 			var century = hamResult[i].century + "<br>";
 			var culture = hamResult[i].culture + "<br>";
