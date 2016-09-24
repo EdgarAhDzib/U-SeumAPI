@@ -1,14 +1,15 @@
 $(document).ready( function(){
 
 	//This could easily be a function but lets get it working first...
-	var Title = 'Hot Air Balloons';
-	var Artist = 'Justin Baiko';
-	var Culture = 'Mayan';
-	var Century = '21';
-	var Creditline = 'Harvard API';
-	var Sourcelink = 'harvard';
-	var Wiki_blurb = 'aoisdjf;oiajwf;oaijewfoaiwjefaoiefja;oewfj;aiefj;aowiefjoiawef;<br>oiajwef;oiajwef;oaijwef';
-	var Wikilink = 'Hot Air Balloons';
+	//!!! THESE VARIABLES ARE FOR CAPTIONS USE ONLY
+	var Title = "";
+	var Artist = "";
+	var Culture = "";
+	var Century = "";
+	var Creditline = "";
+	var Sourcelink = "";
+	var Wiki_blurb = "";
+	var Wikilink = = "";
 	var New_image = "";
 	var RM = false;
 
@@ -58,8 +59,6 @@ $(document).ready( function(){
 					$(RMdiv).attr("data-artist",artObj[i].principalOrFirstMaker);
 					$(RMdiv).attr("data-source","RM");
 					$(RMdiv).attr("data-century",timeperiod);
-
-
 
 					$("#rmBlock"+i).html(imageCell).attr("href",artObj[i].webImage.url);
 					RMdiv.prepend(museum).prepend(maker).prepend(longTitle);
@@ -196,9 +195,9 @@ $(document).ready( function(){
 	      var HTML_part3 = '</i><sub> by '; //artist
 	      var HTML_part4 = '</sub></p><p>'; //culture
 	      var HTML_part5 = '<sub> culture</sub></p><p><i>'; //century
-				if (RM) {
+				if (RM) { //Riks musuem only returns years, not centuries
 	      var HTML_part6 = '</i><sub> time period</p><p>'; // sourcelink
-				} else {
+			} else { // Harvard returns centuries
 				var HTML_part6 = '<sup>st</sup></i><sub> century</p><p>'
 				}
 	      var HTML_part7 = '<sub>source</sub></p><p><em>'; //wiki_blurb
