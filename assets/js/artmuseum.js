@@ -12,6 +12,8 @@ $(document).ready( function(){
 	var New_image = "";
 	var RM = false;
 
+	autoload();
+
 	function parse_title(string) {
 		var milk = string;
 		var res = milk.split(",");
@@ -21,6 +23,109 @@ $(document).ready( function(){
 	  return res[2];
 	}
 
+	function autoload() {
+		var query = "";
+		var topics = ["Egyptian","Roman","Classical","European","African","Native American","Celtic","Nordic","Japanese","Greek"];
+		var random = Math.floor(Math.random() * topics.length);
+		query = topics[random];
+		var RMapiKey = "T6Z2QzWq";
+		var RMurl = "https://www.rijksmuseum.nl/api/en/collection/?q=" + query + "&key=" + RMapiKey + "&imgonly=True&toppieces=True&format=json";
+		var HAMapiKey = "f5d56a80-7c49-11e6-b2ae-0fcc14970146";
+		var HAMurl = "http://api.harvardartmuseums.org/object?q=" + query + "&apikey=" + HAMapiKey;
+
+		$.ajax({
+			url: RMurl,
+			method: 'GET',
+		}).done(function(result) {
+			RM = true;
+			var listLength = result.artObjects.length;
+			var artObj = result.artObjects;
+			for (i=0; i<listLength; i++) {
+				if (artObj[i].hasImage === true && artObj[i].webImage != null) {
+					var RMdiv = $("<div>");
+					RMdiv.attr("class","hide");
+					$(RMdiv).attr("data-title",artObj[i].title);
+					//console.log("long title: " + artObj[i].longTitle);
+					var timeperiod = parse_title(artObj[i].longTitle);
+					//console.log(artObj[i].longTitle);
+					var imageCell = $("<img>");
+					imageCell.attr("class","thumbnail");
+					imageCell.attr("src",artObj[i].webImage.url);
+					var longTitle = artObj[i].longTitle + "<br>";
+					var maker = artObj[i].principalOrFirstMaker + "<br>";
+					var museum = "Rijksmuseum, The Netherlands<br>";
+
+					$(RMdiv).attr("data-artist",artObj[i].principalOrFirstMaker);
+					$(RMdiv).attr("data-source","RM");
+					$(RMdiv).attr("data-century",timeperiod);
+
+
+
+					$("#rmBlock"+i).html(imageCell).attr("href",artObj[i].webImage.url);
+					RMdiv.prepend(museum).prepend(maker).prepend(longTitle);
+					$("#rmBlock"+i).append(RMdiv);
+
+					$(".hide").hide();
+
+					wikipedia(artObj[i].title,RMdiv);
+
+				}
+			}
+		});
+
+		$.ajax({
+			url: HAMurl,
+			//beforeSend: function(xhr){xhr.setRequestHeader('X-Test-Header', 'test-value');},
+			method: 'GET',
+		}).done(function(result) {
+			var hamResult = result.records;
+			var HAMlistLength = hamResult.length;
+			for (i=0; i<HAMlistLength; i++) {
+				if (hamResult[i].imagecount>0 && hamResult[i].images.length>0) {
+					var HAMdiv = $("<div>");
+					HAMdiv.attr("class","hide");
+					$(HAMdiv).attr("data-title",hamResult[i].title + " " + hamResult[i].culture + " " + query);
+					var imageURL = $("<img>");
+					imageURL.attr("class","thumbnail");
+					imageURL.attr("src",hamResult[i].images[0].baseimageurl);
+					imageURL.attr("data-title",i + "=" + hamResult[i].title);
+					if (hamResult[i].century !== null) {
+					$(HAMdiv).attr("data-century", hamResult[i].century);
+					} else {
+					$(HAMdiv).attr("data-century", "Unknownd");
+					}
+					$(HAMdiv).attr("data-culture", hamResult[i].culture);
+					$(HAMdiv).attr("data-creditline", hamResult[i].creditline);
+					$(HAMdiv).attr("data-sourcelink", hamResult[i].url);
+					$(HAMdiv).attr("data-source", "HAM");
+					//console.log(hamResult[i]);
+					var title = hamResult[i].title + "<br>";
+					var century = hamResult[i].century + "<br>";
+					var culture = hamResult[i].culture + "<br>";
+					var collection = hamResult[i].division + "<br>";
+					var creditline = hamResult[i].creditline + "<br>";
+					var origURL = "Reference:<br><a href=\""+ hamResult[i].url + "\" target=\"_blank\"> " + hamResult[i].url +" </a><br>";
+
+					$("#hamBlock"+i).html(imageURL).attr("href",hamResult[i].images[0].baseimageurl);
+
+					if (hamResult[i].peoplecount > 0) {
+						var author = hamResult[i].people[0].displayname + "<br>";
+						imageURL.attr("data-artist", hamResult[i].people[0].displayname);
+						HAMdiv.append(author);
+					}
+					HAMdiv.prepend(origURL).prepend(creditline).prepend(collection).prepend(culture).prepend(century).prepend(title);
+					$("#hamBlock"+i).append(HAMdiv);
+
+					$(".hide").hide();
+
+					wikipedia(hamResult[i].title,HAMdiv);
+
+				}
+			}
+
+		});
+
+	}
 
   //When user trys to expand our div, we get the information embedded in the data-attr to populate our caption
 	$( ".captions" ).click(function() {
@@ -43,7 +148,7 @@ $(document).ready( function(){
 			var time = $(this).find('.hide').data('century');
 			var matches = time.match(/\d+/g);
 				if (matches != null) {
-					console.log("is a number");
+					//console.log("is a number");
 					Century = time;
 				} else {
 				Century = "Unknown";
@@ -92,7 +197,6 @@ $(document).ready( function(){
 	      var HTML_part4 = '</sub></p><p>'; //culture
 	      var HTML_part5 = '<sub> culture</sub></p><p><i>'; //century
 				if (RM) {
-				console.log("RM is true");
 	      var HTML_part6 = '</i><sub> time period</p><p>'; // sourcelink
 				} else {
 				var HTML_part6 = '<sup>st</sup></i><sub> century</p><p>'
