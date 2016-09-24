@@ -9,7 +9,7 @@ $(document).ready( function(){
 	var Creditline = "";
 	var Sourcelink = "";
 	var Wiki_blurb = "";
-	var Wikilink = = "";
+	var Wikilink = "";
 	var New_image = "";
 	var RM = false;
 
