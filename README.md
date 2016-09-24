@@ -1,5 +1,9 @@
 # U-SeumAPI
 
+## What is U-seum?
+
+## Best way to use U-seum!
+
 ## Trello
 
 [U-Seum Trello Board](https://trello.com/artmuseumapi)
