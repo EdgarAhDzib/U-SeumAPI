@@ -16,32 +16,49 @@ $(document).ready( function(){
 	$( ".captions" ).click(function() {
 
 			var url = $(this).find('.thumbnail').attr('src');
-			New_image = url;
+			//New_image = url;
+			var secureSplice = url.substring(0,4);
+			var newUrl = secureSplice+"s"+url.substring(4);
+			console.log(newUrl);
+			New_image = newUrl;
 
-			console.log(url);
-
-			var title = $(this).find('.hide').data('title');
+			var title = $(this).find('.artTitle').data('title');
 			Title = title;
 			console.log(title);
+//the Century and Culture data types do not exist
+			if ($(this).find('.hide').data('century')) {
+				var century = $(this).find('.hide').data('century');
+				Century = century;
+				console.log("Century is provided");
+			} else {
+				Century = "";
+				console.log("No century given!");
+			}
 
-			var century = $(this).find('.hide').data('century');
-			Century = "21";
-			console.log("century: " + century);
+			if ($(this).find('.hide').data('culture')) {
+				var culture = $(this).find('.hide').data('culture');
+				Culture = culture;
+				console.log("Culture is provided");
+			} else {
+				Culture = "";
+				console.log("No culture assigned!");
+			}
 
-			var culture = $(this).find('.hide').data('culture');
-			Culture = "Unknown";
-			console.log("culture: " + culture);
-
-			var creditline = $(this).find('.hide').data('creditline');
-			Creditline = "Unknown";
+			var creditline = $(this).find('.artMuseum').data('museum');
+			Creditline = creditline;
 			console.log("credit: " + Creditline);
 
-			var sourcelink = $(this).find('.hide').data('sourcelink');
-			Sourcelink = "Unknown";
+			var sourcelink = $(this).find('.sourcelink').data('sourcelink');
+			Sourcelink = sourcelink;
 			console.log("Source: " + Sourcelink);
 
-			Wiki_blurb = "Todo";
-			Wikilink = "Todo";
+			var blurb = $(this).find('.wikiExtract').data('extract');
+			console.log(blurb);
+			Wiki_blurb = blurb;
+
+			var extLink = $(this).find('.wikiUrl').data('wiki');
+			Wikilink = extLink;
+			console.log(extLink);
 
 		  var artist = $(this).find('.hide').data('artist');
 			Artist = artist;
@@ -69,11 +86,11 @@ $(document).ready( function(){
 	      var HTML_part3 = '</i><sub> by '; //artist
 	      var HTML_part4 = '</sub></p><p>'; //culture
 	      var HTML_part5 = '<sub> culture</sub></p><p><i>'; //century
-	      var HTML_part6 = '<sup>st</sup></i><sub> century</p><p>'; // sourcelink
-	      var HTML_part7 = '<sub>source</sub></p><p><em>'; //wiki_blurb
-	      var HTML_part8 = '</em><sub>summary</sub></p><p>'; //wikilink
-	      var HTML_part9 = '<sub> wiki-link</sub></p><p>'; //creditline
-	      var HTML_end =  '<sub> credit</sub></p></div></div><div style="clear:both; line-height: 0;"></div></div></body></html>';
+	      var HTML_part6 = '<sup>st</sup></i><sub> century</p>'; // sourcelink
+	      var HTML_part7 = '<p><a href="' + Sourcelink + '" target="_blank">' + Sourcelink + '</a><sub>source</sub></p><p><em>'; //wiki_blurb
+	      var HTML_part8 = '</em><sub>summary</sub></p>'; //wikilink
+	      var HTML_part9 = '<p><a href = "https://en.wikipedia.org/?curid=' + Wikilink + '" target="_blank">https://en.wikipedia.org/?curid=' + Wikilink + '</a><sub> wiki-link</sub></p>'; //creditline
+	      var HTML_end =  '<p><sub> credit</sub></p></div></div><div style="clear:both; line-height: 0;"></div></div></body></html>';
 
 
 	      var title = Title;
@@ -81,13 +98,20 @@ $(document).ready( function(){
 	      var culture = Culture;
 	      var century = Century;
 	      var creditline = Creditline;
-	      var sourcelink = Sourcelink;
 	      var wiki_blurb = Wiki_blurb;
 	      var wikilink = Wikilink;
 
 
-	      var new_image = New_image;
-	      var newData = HTML_part1 + new_image + HTML_part2 + title + HTML_part3 + artist + HTML_part4 + culture + HTML_part5 + century + HTML_part6 + sourcelink + HTML_part7 + wiki_blurb + HTML_part8 + wikilink + HTML_part9 + creditline + HTML_end;
+	      //var new_image = New_image;
+	      var parts1To4 = HTML_part1 + New_image + HTML_part2 + title + HTML_part3 + artist + HTML_part4;
+	      if (Culture != "") {
+	      	parts1To4 += culture + HTML_part5;
+	      }
+	      if (Century != "") {
+	      	parts1To4 += century + HTML_part6;
+	      }
+	      var parts7To9 = HTML_part7 + wiki_blurb + HTML_part8 + HTML_part9 + creditline + HTML_end;
+	      var newData = parts1To4 + parts7To9;
 	      mfpResponse.data = newData;
 	      //console.log('Ajax content loaded:', mfpResponse.data);
 
@@ -108,7 +132,6 @@ $('#logo').on('click', function() {
 var RMapiKey = "T6Z2QzWq";
 var query = "";
 
-
 $(".submit").on("click", function(){
 query = $("input:text[name=searchBar]").val().trim();
 
@@ -120,8 +143,6 @@ var RMurl = "https://www.rijksmuseum.nl/api/en/collection/?q=" + query + "&key="
 
 var HAMapiKey = "f5d56a80-7c49-11e6-b2ae-0fcc14970146";
 var HAMurl = "http://api.harvardartmuseums.org/object?q=" + query + "&apikey=" + HAMapiKey;
-
-
 
 $.ajax({
 	url: RMurl,
@@ -137,16 +158,14 @@ $.ajax({
 			var imageCell = $("<img>");
 			imageCell.attr("class","thumbnail");
 			imageCell.attr("src",artObj[i].webImage.url);
-			var longTitle = artObj[i].longTitle + "<br>";
-			var maker = artObj[i].principalOrFirstMaker + "<br>";
-			var museum = "Rijksmuseum, The Netherlands<br>";
 
-			//Add link to original page
+			var maker = artObj[i].principalOrFirstMaker + "<br>";
+			var origLink = "Reference:<br><a href=\""+ artObj[i].links.web + "\" target=\"_blank\"> " + artObj[i].links.web +" </a><br>";
+
 			$(RMdiv).attr("data-artist",artObj[i].principalOrFirstMaker);
 
-
 			$("#rmBlock"+i).html(imageCell).attr("href",artObj[i].webImage.url);
-			RMdiv.prepend(museum).prepend(maker).prepend(longTitle);
+			RMdiv.prepend(makeDiv("sourcelink","sourcelink",artObj[i].links.web)).prepend(makeDiv("museum","artMuseum","Rijksmuseum, The Netherlands")).prepend(maker).prepend(makeDiv("title","artTitle",artObj[i].longTitle));
 			$("#rmBlock"+i).append(RMdiv);
 
 			$(".hide").hide();
@@ -181,8 +200,11 @@ $.ajax({
 			$(HAMdiv).attr("data-culture", hamResult[i].culture);
 			$(HAMdiv).attr("data-creditline", hamResult[i].creditline);
 			$(HAMdiv).attr("data-sourcelink", hamResult[i].url);
-			console.log(hamResult[i]);
-			var title = hamResult[i].title + "<br>";
+			//console.log(hamResult[i]);
+			var titleDiv = $("<div>");
+			titleDiv.attr("class","artTitle");
+			titleDiv.attr("data-title",hamResult[i].title);
+			titleDiv.html(hamResult[i].title);
 			var century = hamResult[i].century + "<br>";
 			var culture = hamResult[i].culture + "<br>";
 			var collection = hamResult[i].division + "<br>";
@@ -196,7 +218,7 @@ $.ajax({
 				imageURL.attr("data-artist", hamResult[i].people[0].displayname);
 				HAMdiv.append(author);
 			}
-			HAMdiv.prepend(origURL).prepend(creditline).prepend(collection).prepend(culture).prepend(century).prepend(title);
+			HAMdiv.prepend(origURL).prepend(creditline).prepend(collection).prepend(culture).prepend(century).prepend(titleDiv);
 			$("#hamBlock"+i).append(HAMdiv);
 
 			$(".hide").hide();
@@ -214,6 +236,14 @@ return false;
 
 }); //end of document ready
 
+function makeDiv(divToAdd,className,value) {
+	var category = $("<div>");
+	category.attr("class",className);
+	category.attr("data-"+divToAdd,value);
+	category.html(value);
+	return category;
+}
+
 function wikipedia(argument,div) {
 	var wikiTopic = "https://en.wikipedia.org/w/api.php?action=query&format=json&gsrlimit=5&generator=search&origin=*&gsrsearch=" + argument + "&prop=extracts&exintro&explaintext&exsentences=1";
 		//console.log(wikiTopic);
@@ -227,8 +257,8 @@ function wikipedia(argument,div) {
 				if (wikiLinks[value].extract) {
 					//console.log("This extract for RM iteration "+i+"(if.extract): " + value + " " + wikiLinks[value].extract);
 					//console.log("https://en.wikipedia.org/?curid=" + wikiLinks[value].pageid);
-					var wikiExtract = "<div>" + wikiLinks[value].extract + "<br></div>";
-					var wikiUrl = "<a href = \"https://en.wikipedia.org/?curid=" + wikiLinks[value].pageid + "\" target = \"_blank\" >https://en.wikipedia.org/?curid=" + wikiLinks[value].pageid + "</a>";
+					var wikiExtract = "<div class=\"wikiExtract\" data-extract=\"" + wikiLinks[value].extract + "\">" + wikiLinks[value].extract + "<br></div>";
+					var wikiUrl = "<div class=\"wikiUrl\" data-wiki=\"" + wikiLinks[value].pageid + "\"><a href = \"https://en.wikipedia.org/?curid=" + wikiLinks[value].pageid + "\" target = \"_blank\" >https://en.wikipedia.org/?curid=" + wikiLinks[value].pageid + "</a></div>";
 					div.append(wikiExtract).append(wikiUrl);
 					//console.log(RMdiv);
 				}
@@ -242,8 +272,8 @@ function wikipedia(argument,div) {
 					if (wikiLinks[value].extract) {
 						//console.log("This extract for RM iteration "+i+"(for query): " + value + " " + wikiLinks[value].extract);
 						//console.log("https://en.wikipedia.org/?curid=" + wikiLinks[value].pageid);
-						var wikiExtract = "<div>" + wikiLinks[value].extract + "<br></div>";
-						var wikiUrl = "<a href = \"https://en.wikipedia.org/?curid=" + wikiLinks[value].pageid + "\" target = \"_blank\" >https://en.wikipedia.org/?curid=" + wikiLinks[value].pageid + "</a>";
+						var wikiExtract = "<div class=\"wikiExtract\" data-extract=\"" + wikiLinks[value].extract + "\">" + wikiLinks[value].extract + "<br></div>";
+						var wikiUrl = "<div class=\"wikiUrl\" data-wiki=\"" + wikiLinks[value].pageid + "\"><a href = \"https://en.wikipedia.org/?curid=" + wikiLinks[value].pageid + "\" target = \"_blank\" >https://en.wikipedia.org/?curid=" + wikiLinks[value].pageid + "</a></div>";
 						div.append(wikiExtract).append(wikiUrl);
 						//console.log(RMdiv);
 					}

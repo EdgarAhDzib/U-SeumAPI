@@ -160,7 +160,7 @@ MagnificPopup.prototype = {
 		if(data.isObj === false) {
 			// convert jQuery collection to array to avoid conflicts later
 			mfp.items = data.items.toArray();
-
+//console.log(mfp.items);
 			mfp.index = 0;
 			var items = data.items,
 				item;
