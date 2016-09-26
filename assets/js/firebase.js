@@ -15,6 +15,7 @@
 
       $('#sign-in').magnificPopup({
     	  type: 'ajax',
+        closeOnBgClick: false, 
     	  callbacks: {
     	    parseAjax: function(mfpResponse) {
 
