@@ -20,7 +20,7 @@ ul li {
   margin-left: 3px;
 }
 
-.header {
+.page-header {
     height: 60px;
     background-color: #28A9AF;
 }
@@ -36,7 +36,7 @@ ul li {
 }
 
 .footer {
-    /*height: 150px;*/  /* Leaving in case we want to define a height later */
+    height: 150px;  /* Leaving in case we want to define a height later */
     background-color: #28A9AF;
     color: #ffffff;
 }
