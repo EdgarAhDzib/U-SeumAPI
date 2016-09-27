@@ -19,11 +19,7 @@ $(document).ready( function(){
 		var milk = string;
 		var res = milk.split(",");
 		for (index in res) {
-<<<<<<< HEAD
-			//console.log("res " + index + ": " + res[index]);
-=======
 			console.log("res " + index + ": " + res[index]);
->>>>>>> master
 		}
 	  return res[2];
 	}
@@ -110,7 +106,7 @@ $(document).ready( function(){
 
 					dataObj.id = "hamBlock"+i;
 					dataObj.culture = hamResult[i].culture;
-					dataObj.image = "https://ids.lib.harvard.edu/ids/view/" + hamResult[i].images[0].idsid; // changed from baseimageurl
+					dataObj.image = "https://ids.lib.harvard.edu/ids/iiif/" + hamResult[i].images[0].idsid + "/full/full/0/native.jpg";
 					dataObj.title = hamResult[i].title;
 					dataObj.origLink = hamResult[i].url;
 					dataObj.museum = hamResult[i].creditline;
@@ -334,7 +330,7 @@ $.ajax({
 
 			dataObj.id = "hamBlock"+i;
 			dataObj.culture = hamResult[i].culture;
-			dataObj.image = "https://ids.lib.harvard.edu/ids/view/" + hamResult[i].images[0].idsid; // changed from baseimageurl
+			dataObj.image = "https://ids.lib.harvard.edu/ids/iiif/" + hamResult[i].images[0].idsid + "/full/full/0/native.jpg";
 			dataObj.title = hamResult[i].title;
 			dataObj.origLink = hamResult[i].url;
 			dataObj.museum = hamResult[i].creditline;
@@ -370,17 +366,10 @@ function wikipedia(argument,div) {
 			for (value in wikiLinks) {//console.log(value);
 						//console.log(wikiLinks[value].extract);
 				if (wikiLinks[value].extract) {
-<<<<<<< HEAD
 					//console.log("This extract (if.extract): " + wikiLinks[value].extract);
 					//console.log("https://en.wikipedia.org/?curid=" + wikiLinks[value].pageid);
 					var wikiExtract = "<div class=\"wikiExtract\" data-extract=\"" + wikiLinks[value].extract + "\">" + wikiLinks[value].extract + "<br></div>";
 					var wikiUrl = "<div class=\"wikiUrl\" data-wiki=\"" + wikiLinks[value].pageid + "\"><a href = \"https://en.wikipedia.org/?curid=" + wikiLinks[value].pageid + "\" target = \"_blank\" >https://en.wikipedia.org/?curid=" + wikiLinks[value].pageid + "</a></div>";
-=======
-					//console.log("This extract for RM iteration "+i+"(if.extract): " + value + " " + wikiLinks[value].extract);
-					//console.log("https://en.wikipedia.org/?curid=" + wikiLinks[value].pageid);
-					var wikiExtract = "<div>" + wikiLinks[value].extract + "<br></div>";
-					var wikiUrl = "<a href = \"https://en.wikipedia.org/?curid=" + wikiLinks[value].pageid + "\" target = \"_blank\" >https://en.wikipedia.org/?curid=" + wikiLinks[value].pageid + "</a>";
->>>>>>> master
 					div.append(wikiExtract).append(wikiUrl);
 					//console.log(RMdiv);
 				}
@@ -392,17 +381,10 @@ function wikipedia(argument,div) {
 				var wikiLinks = jsonData.query.pages;
 				for (value in wikiLinks) {
 					if (wikiLinks[value].extract) {
-<<<<<<< HEAD
 						//console.log("This extract (for query): " + wikiLinks[value].extract);
 						//console.log("https://en.wikipedia.org/?curid=" + wikiLinks[value].pageid);
 						var wikiExtract = "<div class=\"wikiExtract\" data-extract=\"" + wikiLinks[value].extract + "\">" + wikiLinks[value].extract + "<br></div>";
 						var wikiUrl = "<div class=\"wikiUrl\" data-wiki=\"" + wikiLinks[value].pageid + "\"><a href = \"https://en.wikipedia.org/?curid=" + wikiLinks[value].pageid + "\" target = \"_blank\" >https://en.wikipedia.org/?curid=" + wikiLinks[value].pageid + "</a></div>";
-=======
-						//console.log("This extract for RM iteration "+i+"(for query): " + value + " " + wikiLinks[value].extract);
-						//console.log("https://en.wikipedia.org/?curid=" + wikiLinks[value].pageid);
-						var wikiExtract = "<div>" + wikiLinks[value].extract + "<br></div>";
-						var wikiUrl = "<a href = \"https://en.wikipedia.org/?curid=" + wikiLinks[value].pageid + "\" target = \"_blank\" >https://en.wikipedia.org/?curid=" + wikiLinks[value].pageid + "</a>";
->>>>>>> master
 						div.append(wikiExtract).append(wikiUrl);
 						//console.log(RMdiv);
 					}
