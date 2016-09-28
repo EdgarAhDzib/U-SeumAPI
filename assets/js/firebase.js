@@ -10,12 +10,15 @@
 
   var db = firebase.database();
 
-
+  function writeUserData(userId, name, email, imageUrl) {
+    firebase.database().ref('users/' + userId).set({
+      username: name,
+      email: email,
+      profile_picture : imageUrl
+    });
+  }
   //
   $( document ).ready(function() {
-
-
-
 
     $(function () {
 
@@ -29,6 +32,8 @@
         if (user) {
           // User is signed in.
           console.log("user signed in");
+          console.log(user);
+          writeUserData(user.uid,"Test_user",user.email,"http:www.test_url.com");
         } else {
           // No user is signed in.
           console.log("no one is signed in");
@@ -84,6 +89,10 @@
           console.log(error);
           // [END_EXCLUDE]
         });
+
+
+
+
         $.magnificPopup.close();
       });
     });
