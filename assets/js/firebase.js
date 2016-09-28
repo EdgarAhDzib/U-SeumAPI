@@ -17,6 +17,17 @@
       profile_picture : imageUrl
     });
   }
+  function writeUserData1(userId, picture) {
+    var test = ["test","test1","test2"];
+    firebase.database().ref('users/' + userId + '/favorites').set({
+      pictures: test
+    });
+  }
+  function addPicture(userId, picture) {
+    firebase.database().ref('users/' + userId + '/favorites').update({
+      picture: picture
+    });
+  }
   //
   $( document ).ready(function() {
 
@@ -33,7 +44,9 @@
           // User is signed in.
           console.log("user signed in");
           console.log(user);
-          writeUserData(user.uid,"Test_user",user.email,"http:www.test_url.com");
+          //writeUserData(user.uid,"Test_user",user.email,"http:www.test_url.com");
+          writeUserData1(user.uid,"image here");
+          //addPicture(user.uid,"new picture1");
         } else {
           // No user is signed in.
           console.log("no one is signed in");
