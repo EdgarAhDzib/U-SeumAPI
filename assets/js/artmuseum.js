@@ -19,7 +19,7 @@ $(document).ready( function(){
 		var milk = string;
 		var res = milk.split(",");
 		for (index in res) {
-			console.log("res " + index + ": " + res[index]);
+			//console.log("res " + index + ": " + res[index]);
 		}
 	  return res[2];
 	}
@@ -35,7 +35,7 @@ $(document).ready( function(){
 		var HAMurl = "http://api.harvardartmuseums.org/object?q=" + query + "&apikey=" + HAMapiKey;
 
 		objArray = [];
-		
+
 		$.ajax({
 			url: RMurl,
 			method: 'GET',
@@ -132,11 +132,6 @@ $(document).ready( function(){
 
   //When user trys to expand our div, we get the information embedded in the data-attr to populate our caption
 	$( ".captions" ).click(function() {
-			/* The original url code, in case the new one fails
-			var url = $(this).find('.thumbnail').attr('src');
-			New_image = url;
-			console.log(url);
-			*/
 
 	var thisId = $(this).attr("id");
 	var arrIndex = objArray.findIndex(x=>x.id==thisId);
@@ -165,23 +160,6 @@ $(document).ready( function(){
 	Creditline = objArray[arrIndex].museum;
 	Sourcelink = objArray[arrIndex].origLink;
 
-			/* Needs integration
-			var source = $(this).find('.hide').data('source');
-			if (source == "RM") {
-				RM = true;
-			} else {
-				RM = false;
-			}
-			var time = $(this).find('.hide').data('century');
-			var matches = time.match(/\d+/g);
-				if (matches != null) {
-					//console.log("is a number");
-					Century = time;
-				} else {
-				Century = "Unknown";
-				}
-			console.log("century: " + time);
-			*/
 
 	});
 
@@ -249,7 +227,7 @@ var query = "";
 
 $(".submit").on("click", function(){
 query = $("input:text[name=searchBar]").val().trim();
-
+  console.log("submit clicked");
 	if (query === "") {
     	$('#searchInput').transition('slide left');
 	}
