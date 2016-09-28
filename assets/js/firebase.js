@@ -1,22 +1,22 @@
 // Initialize Firebase
-  var config = {
+var config = {
     apiKey: "AIzaSyCFvZM-io7AWOKZLwaXN13laMjamcCXsiY",
     authDomain: "u-seum.firebaseapp.com",
     databaseURL: "https://u-seum.firebaseio.com",
-    storageBucket: "",
+    storageBucket: "u-seum.appspot.com",
     messagingSenderId: "870561197845"
-  };
-  firebase.initializeApp(config);
+};
+firebase.initializeApp(config);
 
 var database = firebase.database();
 
 // Test userId
 var userId = 12345;
 
-database.ref().on("value", function (snapshot) {
+database.ref().on("value", function(snapshot) {
 
     // Account settings page
-    //Let's find the user's data saved in the database
+    // Let's find the user's data saved in the database
     var currentSnap = snapshot.child("/users/" + userId);
 
     $('#cardName').html(currentSnap.val().firstName);
@@ -29,7 +29,7 @@ database.ref().on("value", function (snapshot) {
     $('#timeSpent').html(currentSnap.val().timeSpent);
 
     // Favorite pic pages
-    //Let's find the user's favorite pictures
+    // Let's find the user's favorite pictures
 
     // var pictureSnap = snapshot.child("/users/" + userId + "/favoritePics");
 
@@ -43,6 +43,6 @@ database.ref().on("value", function (snapshot) {
 
     $('#favoritePics').html(picture);
 
-}, function (errorObject) {
+}, function(errorObject) {
     console.log("The read failed: " + errorObject.code);
 });
