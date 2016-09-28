@@ -250,16 +250,19 @@ var userid = "";
 $(".submit").on("click", function(){
 query = $("input:text[name=searchBar]").val().trim();
 
-	database.ref().on("value", function(snapshot) {
-		//userid = snapshot.val().12345;
-		var newQuery = database.ref('users/12345/searchHistory').push({
-			search: query
-		});
-	});
-
 	if (query === "") {
     	$('#searchInput').transition('slide left');
 	}
+	/*
+	else {
+		database.ref().on("value", function(snapshot) {
+			//userid = snapshot.val().12345;
+			var newQuery = database.ref('users/12345/tempSearches').push({
+				search: query
+			});
+		});
+	}
+	*/
 
 var RMurl = "https://www.rijksmuseum.nl/api/en/collection/?q=" + query + "&key=" + RMapiKey + "&imgonly=True&toppieces=True&format=json";
 
