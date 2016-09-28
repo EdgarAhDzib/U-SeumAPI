@@ -19,6 +19,15 @@
     		focus: '#username',
     		modal: true
     	});
+      $('.popup-modal').magnificPopup({
+    		type: 'inline',
+    		preloader: false,
+    		focus: '#username',
+    		modal: true
+    	});
+      $('#signup-button').click(function(){
+        $.magnificPopup.close();
+      });
     	$(document).on('click', '.popup-modal-dismiss', function (e) {
     		e.preventDefault();
     		$.magnificPopup.close();
