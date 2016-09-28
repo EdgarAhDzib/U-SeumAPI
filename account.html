@@ -58,24 +58,22 @@
         </div>
 
         <div class="ui container">
-            <div class="ui padded centered grid" height="900">
+            <div class="ui padded centered grid">
                 <div class="four wide column">
                     <div class="ui fluid card">
                         <div class="image">
                             <img src="http://placehold.it/350x300">
                         </div>
                         <div class="content">
-                            <a class="header">Kristy</a>
+                            <a class="header" id="cardName"></a>
                             <div class="meta">
-                                <span class="date">Joined in 2013</span>
+                                <span class="date" id="joinDate"></span>
                             </div>
-                            <div class="description">
-                                Kristy is an art director living in New York.
+                            <div class="description" id="shortBio">
                             </div>
                         </div>
                         <div class="extra content">
-                            <a>
-                                <i class="user icon"></i> 22 Friends
+                            <a id="friendCount">
                             </a>
                         </div>
                     </div>
@@ -85,7 +83,7 @@
                         <div class="item">
                             <div class="content">
                                 <h1>Bio</h1>
-                                <div class="description">
+                                <div class="description" id="longBio">
                                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
                                         consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
                                         est laborum.</p>
@@ -96,24 +94,21 @@
                     <div class="row">
                         <div class="ui three statistics">
                             <div class="statistic">
-                                <div class="value">
-                                    22
+                                <div class="value" id="favCount">
                                 </div>
                                 <div class="label">
                                     Faves
                                 </div>
                             </div>
                             <div class="statistic">
-                                <div class="value">
-                                    31,200
+                                <div class="value" id="viewCount">
                                 </div>
                                 <div class="label">
                                     Pictures Viewed
                                 </div>
                             </div>
                             <div class="statistic">
-                                <div class="value">
-                                    7
+                                <div class="value" id="timeSpent">
                                 </div>
                                 <div class="label">
                                     Hours Spent
@@ -184,6 +179,7 @@
     <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
     <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
     <script src="assets/js/artmuseum.js"></script>
+    <script src="assets/js/firebase.js"></script>
 </body>
 
 </html>
