@@ -221,10 +221,10 @@ $(document).ready( function(){
 	      var HTML_part9 = '<p><a href = "https://en.wikipedia.org/?curid=' + Wikilink + '" target="_blank">https://en.wikipedia.org/?curid=' + Wikilink + '</a><sub> wiki-link</sub></p>'; //creditline
 	      var HTML_part10 = '<p><sub> credit</sub></p>';
 
+
 	      if (Collection_info != "") {
 	      	HTML_part10 += '<p>' + Collection_info + '</p><p><sub> collection</sub></p>';
 	      }
-
 	      var HTML_end =  '</div></div><div style="clear:both; line-height: 0;"></div></div></body></html>';
 // Add the Collection to this code
 	      var title = Title;
@@ -232,7 +232,7 @@ $(document).ready( function(){
 	      var culture = Culture;
 	      var century = Century;
 	      var creditline = Creditline;
-		  RM = false;
+		  	RM = false;
 
 	      var parts1To4 = HTML_part1 + New_image + HTML_part2 + title + HTML_part3 + artist + HTML_part4;
 	      if (Culture != "") {
@@ -267,7 +267,7 @@ query = $("input:text[name=searchBar]").val().trim();
 	if (query === "") {
     	$('#searchInput').transition('slide left');
 	}
-	/*
+	/*	
 	else {
 		database.ref().on("value", function(snapshot) {
 			//userid = snapshot.val().12345;
