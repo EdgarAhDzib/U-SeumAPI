@@ -28,6 +28,13 @@
       picture: picture
     });
   }
+
+  function retrieve_fav_pictures(user) {
+    var database = firebase.database().ref('users/' + user.uid + '/favorites');
+    database.on('value', function(snapshot) {
+      console.log("snapshot: " + snapshot.val().picture);
+    });
+  }
   //
   $( document ).ready(function() {
 
@@ -45,7 +52,8 @@
           console.log("user signed in");
           console.log(user);
           //writeUserData(user.uid,"Test_user",user.email,"http:www.test_url.com");
-          writeUserData1(user.uid,"image here");
+          //writeUserData1(user.uid,"image here");
+          retrieve_fav_pictures(user);
           //addPicture(user.uid,"new picture1");
         } else {
           // No user is signed in.
