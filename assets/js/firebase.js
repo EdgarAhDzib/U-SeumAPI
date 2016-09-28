@@ -10,9 +10,30 @@
 
   var db = firebase.database();
 
+
   //
   $( document ).ready(function() {
+
+
+
+
     $(function () {
+
+      firebase.auth().signOut().then(function() {
+        // Sign-out successful.
+      }, function(error) {
+        // An error happened.
+      });
+
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          // User is signed in.
+          console.log("user signed in");
+        } else {
+          // No user is signed in.
+          console.log("no one is signed in");
+        }
+      });
     	$('.popup-modal').magnificPopup({
     		type: 'inline',
     		preloader: false,
