@@ -11,15 +11,16 @@ $(document).ready( function(){
 	var Wiki_blurb = "";
 	var Wikilink = "";
 	var New_image = "";
+	var Collection_info = "";
 	var RM = false;
 	var objArray = [];
-	//autoload();
+	autoload();
 
 	function parse_title(string) {
 		var milk = string;
 		var res = milk.split(",");
 		for (index in res) {
-			console.log("res " + index + ": " + res[index]);
+			//console.log("res " + index + ": " + res[index]);
 		}
 	  return res[2];
 	}
@@ -35,7 +36,7 @@ $(document).ready( function(){
 		var HAMurl = "http://api.harvardartmuseums.org/object?q=" + query + "&apikey=" + HAMapiKey;
 
 		objArray = [];
-		
+
 		$.ajax({
 			url: RMurl,
 			method: 'GET',
@@ -44,7 +45,7 @@ $(document).ready( function(){
 			var listLength = result.artObjects.length;
 			var artObj = result.artObjects;
 			for (i=0; i<listLength; i++) {
-				var dataObj = {id:"", image:"", title:"", maker:"", culture:"", century:"", museum:"", origLink:"", wikiExtract:"", wikiUrl:""};
+				var dataObj = {id:"", image:"", title:"", maker:"", culture:"", century:"", museum:"", collection:"", origLink:"", wikiExtract:"", wikiUrl:""};
 				if (artObj[i].hasImage === true && artObj[i].webImage != null) {
 					var RMdiv = $("<div>");
 					RMdiv.attr("class","hide");
@@ -85,7 +86,7 @@ $(document).ready( function(){
 			var hamResult = result.records;
 			var HAMlistLength = hamResult.length;
 			for (i=0; i<HAMlistLength; i++) {
-				var dataObj = {id:"", image:"", title:"", maker:"", culture:"", century:"", museum:"", origLink:"", wikiExtract:"", wikiUrl:""};
+				var dataObj = {id:"", image:"", title:"", maker:"", culture:"", century:"", museum:"", collection:"", origLink:"", wikiExtract:"", wikiUrl:""};
 				if (hamResult[i].imagecount>0 && hamResult[i].images.length>0) {
 					var HAMdiv = $("<div>");
 					HAMdiv.attr("class","hide");
@@ -110,18 +111,31 @@ $(document).ready( function(){
 					dataObj.title = hamResult[i].title;
 					dataObj.origLink = hamResult[i].url;
 					dataObj.museum = hamResult[i].creditline;
+					dataObj.collection = hamResult[i].division;
 					objArray.push(dataObj);
-					console.log(objArray);
+					//console.log(objArray);
 
-					$("#hamBlock"+i).html(imageURL).attr("href",dataObj.image); // changed from baseimageurl
+					$("#hamBlock"+i).html(imageURL).attr("href",dataObj.image);
 					$("#hamBlock"+i).append(HAMdiv);
-
-			//Collection remains to be written into the popup code
-			var collection = hamResult[i].division + "<br>";
-
 					$(".hide").hide();
 
-					wikipedia(hamResult[i].title,HAMdiv);
+					var hamString = dataObj.title;
+					hamString = hamString.replace("(","")
+					hamString = hamString.replace(")","")
+					hamString = hamString.replace(",","");
+					var cleanString = hamString.split(" ");
+					if (cleanString.length >= 8) {
+						var lastWords = cleanString.length - 7;
+						cleanString.splice(8,lastWords);
+						//var newString = cleanString.toString();
+						hamString = cleanString.join(" ");
+					}
+					hamString = hamString + " " + hamResult[i].culture;
+					if (hamResult[i].peoplecount > 0 && hamResult[i].people[0].displayname != "Unidentified Artist") {
+						hamString = hamString + " " + hamResult[i].people[0].displayname;
+					}
+
+					wikipedia(hamString,HAMdiv);
 
 				}
 			}
@@ -132,11 +146,6 @@ $(document).ready( function(){
 
   //When user trys to expand our div, we get the information embedded in the data-attr to populate our caption
 	$( ".captions" ).click(function() {
-			/* The original url code, in case the new one fails
-			var url = $(this).find('.thumbnail').attr('src');
-			New_image = url;
-			console.log(url);
-			*/
 
 	var thisId = $(this).attr("id");
 	var arrIndex = objArray.findIndex(x=>x.id==thisId);
@@ -147,7 +156,6 @@ $(document).ready( function(){
 	Wiki_blurb = $(this).find('.wikiExtract').data('extract');
 	Wikilink = $(this).find('.wikiUrl').data('wiki');
 	//console.log(Wiki_blurb, Wikilink);
-
 	Artist = objArray[arrIndex].maker;
 
 	if (objArray[arrIndex].century != "") {
@@ -162,16 +170,22 @@ $(document).ready( function(){
 		Culture = "";
 	}
 
+	if (objArray[arrIndex].collection != "") {
+		Collection_info = objArray[arrIndex].collection;
+	} else {
+		Collection_info = "";
+	}
+
+	if (Creditline == "Rijksmuseum, The Netherlands") {
+		RM = true;
+	} else {
+		RM = false;
+	}
+
 	Creditline = objArray[arrIndex].museum;
 	Sourcelink = objArray[arrIndex].origLink;
 
 			/* Needs integration
-			var source = $(this).find('.hide').data('source');
-			if (source == "RM") {
-				RM = true;
-			} else {
-				RM = false;
-			}
 			var time = $(this).find('.hide').data('century');
 			var matches = time.match(/\d+/g);
 				if (matches != null) {
@@ -185,8 +199,6 @@ $(document).ready( function(){
 
 	});
 
-
-
 	$('.captions').magnificPopup({
 	  type: 'ajax',
 	  callbacks: {
@@ -199,17 +211,22 @@ $(document).ready( function(){
 	``
 	      // mfpResponse.data must be a String or a DOM (jQuery) element
 	      var HTML_part1 = '<!DOCTYPE html><html><head><meta charset="utf-8"><title>captions</title></head><body><div class="ajax-text-and-image white-popup-block"><style>.ajax-text-and-image {max-width:800px; margin: 20px auto; background: #FFF; padding: 0; line-height: 0;}.ajcol {width: 50%; float:left;}.ajcol img {width: 100%; height: auto;}@media all and (max-width:30em) {.ajcol {width: 100%;float:none;}}</style><div class="ajcol"><img style="object-fit: contain;" src=';
-	      var HTML_part2 = '></div><div class="ajcol" style="line-height: 50%;"><div style="padding: 1em"><p><i>'; //Title
+	      var HTML_part2 = '></div><div class="ajcol" style="line-height: 120%;"><div style="padding: 1em"><p><i>'; //Title
 	      var HTML_part3 = '</i><sub> by '; //artist
 	      var HTML_part4 = '</sub></p><p>'; //culture
 	      var HTML_part5 = '<sub> culture</sub></p><p><i>'; //century
-	      var HTML_part6 = '<sup>st</sup></i><sub> century</p>'; // sourcelink
+	      var HTML_part6 = '</i><sub> date</p>'; // sourcelink
 	      var HTML_part7 = '<p><a href="' + Sourcelink + '" target="_blank">' + Sourcelink + '</a><sub>source</sub></p><p><em>'; //wiki_blurb
 	      var HTML_part8 = '</em><sub>summary</sub></p>'; //wikilink
 	      var HTML_part9 = '<p><a href = "https://en.wikipedia.org/?curid=' + Wikilink + '" target="_blank">https://en.wikipedia.org/?curid=' + Wikilink + '</a><sub> wiki-link</sub></p>'; //creditline
-	      var HTML_end =  '<p><sub> credit</sub></p></div></div><div style="clear:both; line-height: 0;"></div></div></body></html>';
+	      var HTML_part10 = '<p><sub> credit</sub></p>';
 
-
+	      if (Collection_info != "") {
+	      	HTML_part10 += '<p>' + Collection_info + '</p><p><sub> collection</sub></p>';
+	      }
+	      
+	      var HTML_end =  '</div></div><div style="clear:both; line-height: 0;"></div></div></body></html>';
+// Add the Collection to this code
 	      var title = Title;
 	      var artist = Artist;
 	      var culture = Culture;
@@ -224,8 +241,8 @@ $(document).ready( function(){
 	      if (Century != "") {
 	      	parts1To4 += century + HTML_part6;
 	      }
-	      var parts7To9 = HTML_part7 + Wiki_blurb + HTML_part8 + HTML_part9 + creditline + HTML_end;
-	      var newData = parts1To4 + parts7To9;
+	      var parts7To10 = HTML_part7 + Wiki_blurb + HTML_part8 + HTML_part9 + creditline + HTML_part10 + HTML_end;
+	      var newData = parts1To4 + parts7To10;
 	      mfpResponse.data = newData;
 	      //console.log('Ajax content loaded:', mfpResponse.data);
 
@@ -237,15 +254,12 @@ $(document).ready( function(){
 	  }
 	});
 
-
-
 $('#logo').on('click', function() {
     $('.ui.sidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle')
 });
 
 var RMapiKey = "T6Z2QzWq";
 var query = "";
-var userid = "";
 
 $(".submit").on("click", function(){
 query = $("input:text[name=searchBar]").val().trim();
@@ -253,7 +267,7 @@ query = $("input:text[name=searchBar]").val().trim();
 	if (query === "") {
     	$('#searchInput').transition('slide left');
 	}
-	/*
+	/*	
 	else {
 		database.ref().on("value", function(snapshot) {
 			//userid = snapshot.val().12345;
@@ -275,12 +289,12 @@ $.ajax({
 	url: RMurl,
 	method: 'GET',
 }).done(function(result) {
-	console.log("in RM");
+	//console.log("in RM");
 	RM = true;
 	var listLength = result.artObjects.length;
 	var artObj = result.artObjects;
 	for (i=0; i<listLength; i++) {
-		var dataObj = {id:"", image:"", title:"", maker:"", culture:"", century:"", museum:"", origLink:"", wikiExtract:"", wikiUrl:""};
+		var dataObj = {id:"", image:"", title:"", maker:"", culture:"", century:"", museum:"", collection:"", origLink:"", wikiExtract:"", wikiUrl:""};
 		if (artObj[i].hasImage === true && artObj[i].webImage != null) {
 			var RMdiv = $("<div>");
 			RMdiv.attr("class","hide");
@@ -319,7 +333,7 @@ $.ajax({
 	var hamResult = result.records;
 	var HAMlistLength = hamResult.length;
 	for (i=0; i<HAMlistLength; i++) {
-		var dataObj = {id:"", image:"", title:"", maker:"", culture:"", century:"", museum:"", origLink:"", wikiExtract:"", wikiUrl:""};
+		var dataObj = {id:"", image:"", title:"", maker:"", culture:"", century:"", museum:"", collection:"", origLink:"", wikiExtract:"", wikiUrl:""};
 		if (hamResult[i].imagecount>0 && hamResult[i].images.length>0) {
 			var HAMdiv = $("<div>");
 			HAMdiv.attr("class","hide");
@@ -344,15 +358,30 @@ $.ajax({
 			dataObj.title = hamResult[i].title;
 			dataObj.origLink = hamResult[i].url;
 			dataObj.museum = hamResult[i].creditline;
+			dataObj.collection = hamResult[i].division;
 			objArray.push(dataObj);
-			console.log(objArray);
 
 			$("#hamBlock"+i).html(imageURL).attr("href",dataObj.image); // changed from baseimageurl
 			$("#hamBlock"+i).append(HAMdiv);
 
 			$(".hide").hide();
 
-			wikipedia(hamResult[i].title,HAMdiv);
+			var hamString = dataObj.title;
+			hamString = hamString.replace("(","")
+			hamString = hamString.replace(")","")
+			hamString = hamString.replace(",","");
+			var cleanString = hamString.split(" ");
+			if (cleanString.length >= 8) {
+				var lastWords = cleanString.length - 7;
+				cleanString.splice(8,lastWords);
+				hamString = cleanString.join(" ");
+			}
+			hamString = hamString + " " + hamResult[i].culture;
+			if (hamResult[i].peoplecount > 0 && hamResult[i].people[0].displayname != "Unidentified Artist") {
+				hamString = hamString + " " + hamResult[i].people[0].displayname;
+			}
+
+			wikipedia(hamString,HAMdiv);
 
 		}
 	}
