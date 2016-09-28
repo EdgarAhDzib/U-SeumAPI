@@ -9,6 +9,7 @@
   firebase.initializeApp(config);
 
   var db = firebase.database();
+  var database;
 
   function writeUserData(userId, name, email, imageUrl) {
     firebase.database().ref('users/' + userId).set({
@@ -17,24 +18,40 @@
       profile_picture : imageUrl
     });
   }
-  function writeUserData1(userId, picture) {
-    var test = ["test","test1","test2"];
+  function writePictures(userId, array) {
     firebase.database().ref('users/' + userId + '/favorites').set({
-      pictures: test
+      picture: array
     });
   }
-  function addPicture(userId, picture) {
-    firebase.database().ref('users/' + userId + '/favorites').update({
-      picture: picture
+  function addPicture(user, array) {
+    firebase.database().ref('users/' + user.uid + '/favorites').update({
+      picture: array
     });
   }
 
   function retrieve_fav_pictures(user) {
+    console.log("retrieving pictures");
     var database = firebase.database().ref('users/' + user.uid + '/favorites');
+    var array;
     database.on('value', function(snapshot) {
-      console.log("snapshot: " + snapshot.val().picture);
+      array = snapshot.val().picture;
+      console.log("array is: " + array);
+      return array;
     });
   }
+
+  function retrievePictures(snapshot) {
+    console.log("retrieving pictures");
+    var array = snapshot.val().picture;
+    return array;
+  }
+
+  function getPictures() {
+    console.log("in get pictures");
+    return database.once('value').then(retrievePictures(snapshot));
+  }
+
+
   //
   $( document ).ready(function() {
 
@@ -48,16 +65,30 @@
 
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
+          database = firebase.database().ref('users/' + user.uid + '/favorites');
+          database.on('value', function(snapshot) {
+            array = snapshot.val().picture;
+            //console.log("array is: " + array);
+            //return array;
+          });
+          var pics = array;
+          console.log("pics");
+          pics.push("new image url");
+          console.log("pics :" + pics);
+          //console.log("database: " + database);
           // User is signed in.
-          console.log("user signed in");
-          console.log(user);
+          //var pics = retrieve_fav_pictures(user);
+          //console.log("signed in");
+          //console.log(user);
           //writeUserData(user.uid,"Test_user",user.email,"http:www.test_url.com");
-          //writeUserData1(user.uid,"image here");
-          retrieve_fav_pictures(user);
-          //addPicture(user.uid,"new picture1");
+          //writePictures(user.uid,"image here");
+
+          //console.log("pictures list: " + pics);
+
+          addPicture(user,pics);
         } else {
           // No user is signed in.
-          console.log("no one is signed in");
+          console.log("signed out");
         }
       });
     	$('.popup-modal').magnificPopup({
