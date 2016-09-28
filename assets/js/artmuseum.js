@@ -251,8 +251,8 @@ $(".submit").on("click", function(){
 query = $("input:text[name=searchBar]").val().trim();
 
 	database.ref().on("value", function(snapshot) {
-		userid = snapshot.val().12345;
-		var newQuery = database.ref('users/' + userid + '/searchHistory').push({
+		//userid = snapshot.val().12345;
+		var newQuery = database.ref('users/12345/searchHistory').push({
 			search: query
 		});
 	});
