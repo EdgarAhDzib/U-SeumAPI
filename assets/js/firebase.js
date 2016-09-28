@@ -66,13 +66,13 @@
           pics.push("new image url");
           addPicture(user,pics);
           */
-          console.log("signed in");
+          /*console.log("signed in");
           $('#sign-in').html('Sign out');
           $('#sign-in').click(function(){
             signOut();
             $.magnificPopup.close();
           });
-
+          */
         } else {
           // No user is signed in.
           $('#sign-in').html('Sign in');
