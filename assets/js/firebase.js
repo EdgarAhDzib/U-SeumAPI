@@ -18,17 +18,21 @@
       profile_picture : imageUrl
     });
   }
-  function writePictures(userId, array) {
-    firebase.database().ref('users/' + userId + '/favorites').set({
-      picture: array
-    });
-  }
+
   function addPicture(user, array) {
     firebase.database().ref('users/' + user.uid + '/favorites').update({
       picture: array
     });
   }
 
+  function signOut() {
+    firebase.auth().signOut().then(function() {
+      // Sign-out successful.
+    }, function(error) {
+      // An error happened.
+    });
+  }
+  /* Takes to long to return from async call, must call directly in code.
   function retrieve_fav_pictures(user) {
     console.log("retrieving pictures");
     var database = firebase.database().ref('users/' + user.uid + '/favorites');
@@ -39,32 +43,18 @@
       return array;
     });
   }
-
-  function retrievePictures(snapshot) {
-    console.log("retrieving pictures");
-    var array = snapshot.val().picture;
-    return array;
-  }
-
-  function getPictures() {
-    console.log("in get pictures");
-    return database.once('value').then(retrievePictures(snapshot));
-  }
-
+  */
 
   //
   $( document ).ready(function() {
 
     $(function () {
 
-      firebase.auth().signOut().then(function() {
-        // Sign-out successful.
-      }, function(error) {
-        // An error happened.
-      });
+
 
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
+          /* Retrieves favorite pictures from saved list & adds a new one. Basically everytime we would hit the like button it would call this function.
           database = firebase.database().ref('users/' + user.uid + '/favorites');
           database.on('value', function(snapshot) {
             array = snapshot.val().picture;
@@ -74,20 +64,18 @@
           var pics = array;
           console.log("pics");
           pics.push("new image url");
-          console.log("pics :" + pics);
-          //console.log("database: " + database);
-          // User is signed in.
-          //var pics = retrieve_fav_pictures(user);
-          //console.log("signed in");
-          //console.log(user);
-          //writeUserData(user.uid,"Test_user",user.email,"http:www.test_url.com");
-          //writePictures(user.uid,"image here");
-
-          //console.log("pictures list: " + pics);
-
           addPicture(user,pics);
+          */
+          console.log("signed in");
+          $('#sign-in').html('Sign out');
+          $('#sign-in').click(function(){
+            signOut();
+            $.magnificPopup.close();
+          });
+
         } else {
           // No user is signed in.
+          $('#sign-in').html('Sign in');
           console.log("signed out");
         }
       });
