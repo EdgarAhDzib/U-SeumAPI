@@ -48,8 +48,21 @@
     		$.magnificPopup.close();
     	});
       $('#login-button').click(function(){
-        console.log($('#password-field').val());
-        console.log("login clicked");
+        var email = $('#email-field').val();
+        var password = $('#password-field').val();
+        firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // [START_EXCLUDE]
+          if (errorCode === 'auth/wrong-password') {
+            alert('Wrong password.');
+          } else {
+            alert(errorMessage);
+          }
+          console.log(error);
+          // [END_EXCLUDE]
+        });
         $.magnificPopup.close();
       });
     });
