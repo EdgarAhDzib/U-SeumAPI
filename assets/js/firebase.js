@@ -1,9 +1,9 @@
 // Initialize Firebase
-var config = {
+  var config = {
     apiKey: "AIzaSyCFvZM-io7AWOKZLwaXN13laMjamcCXsiY",
     authDomain: "u-seum.firebaseapp.com",
     databaseURL: "https://u-seum.firebaseio.com",
-    storageBucket: "u-seum.appspot.com",
+    storageBucket: "",
     messagingSenderId: "870561197845"
   };
   firebase.initializeApp(config);
@@ -66,13 +66,13 @@ var config = {
           pics.push("new image url");
           addPicture(user,pics);
           */
-          /*console.log("signed in");
+          console.log("signed in");
           $('#sign-in').html('Sign out');
           $('#sign-in').click(function(){
             signOut();
             $.magnificPopup.close();
           });
-          */
+
         } else {
           // No user is signed in.
           $('#sign-in').html('Sign in');
@@ -131,11 +131,19 @@ var config = {
 
         $.magnificPopup.close();
       });
+    });
 
+/*
+    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    // ...
+  });*/
 
-      var userId = 12345;
+        var userId = 12345;
 
-      database.ref().on("value", function(snapshot) {
+        firebase.database().ref().on("value", function(snapshot) {
 
           // Account settings page
           // Let's find the user's data saved in the database
@@ -168,15 +176,4 @@ var config = {
       }, function(errorObject) {
           console.log("The read failed: " + errorObject.code);
       });
-
-    });
-
-/*
-    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
-    // Handle Errors here.
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    // ...
-  });*/
-
-// Test userId
+});
