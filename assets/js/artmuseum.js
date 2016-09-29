@@ -27,7 +27,7 @@ $(document).ready( function(){
 
 	function autoload() {
 		var query = "";
-		var topics = ["Egyptian","Roman","Classical","European","African","Native American","Celtic","Nordic","Japanese","Greek"];
+		var topics = ["Egyptian","Roman","Classical","African","Native American","Celtic","Japan","Greek"];
 		var random = Math.floor(Math.random() * topics.length);
 		query = topics[random];
 		var RMapiKey = "T6Z2QzWq";
@@ -267,16 +267,12 @@ query = $("input:text[name=searchBar]").val().trim();
 	if (query === "") {
     	$('#searchInput').transition('slide left');
 	}
-	/*	
 	else {
-		database.ref().on("value", function(snapshot) {
-			//userid = snapshot.val().12345;
-			var newQuery = database.ref('users/12345/tempSearches').push({
+		var userId = 12345;
+		database.ref('users/' + userId + '/searchHistory').push({
 				search: query
 			});
-		});
-	}
-	*/
+		}
 
 var RMurl = "https://www.rijksmuseum.nl/api/en/collection/?q=" + query + "&key=" + RMapiKey + "&imgonly=True&toppieces=True&format=json";
 
