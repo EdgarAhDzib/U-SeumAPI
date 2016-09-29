@@ -261,7 +261,15 @@ $('#logo').on('click', function() {
 var RMapiKey = "T6Z2QzWq";
 var query = "";
 
-$(".submit").on("click", function(){
+$("input:text[name=searchBar]").keypress(function(event) {
+	if (event.which == 13) {
+		searchTheMuseums();
+	}
+});
+
+$(document).on("click", ".submit", searchTheMuseums);
+
+function searchTheMuseums() {
 query = $("input:text[name=searchBar]").val().trim();
 
 	if (query === "") {
@@ -386,7 +394,7 @@ $.ajax({
 
 return false;
 
-}); //end of click function
+}; //end of click function
 
 }); //end of document ready
 
