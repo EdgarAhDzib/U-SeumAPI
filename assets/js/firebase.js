@@ -31,17 +31,27 @@ database.ref().on("value", function(snapshot) {
     // Favorite pic pages
     // Let's find the user's favorite pictures
 
-    // var pictureSnap = snapshot.child("/users/" + userId + "/favoritePics");
+    // This returns an object of the pictures
+    var pictureData = currentSnap.val().favoritePics;
+    console.log(pictureData);
 
-    //TODO: Loop through the available picures and display them on the screen
-    // <div class="column">
-    //   <div class="ui segment">
-    //     <img>
-    //   </div>
-    // </div>
-    var picture = $('<img src="">').attr("src", currentSnap.val().favoritePics.pic1);
+    // Convert to an array
+    var picArray = Object.keys(pictureData).map(function (key) {
+      return pictureData[key];
+    });
+    console.log(picArray);
 
-    $('#favoritePics').html(picture);
+    //TODO: Loop through the picures in the array and display them on the screen
+    //
+    for ( var i = 0; i < picArray.length; i++ ) {
+
+      var displayElement = $('<div class="column">');
+      var displayPic = $('<img class="ui fluid large image" src="">').attr("src", picArray[i]);
+
+      displayElement.append(displayPic);
+      $('#favoritePics').append(displayElement);
+
+    }
 
 }, function(errorObject) {
     console.log("The read failed: " + errorObject.code);
