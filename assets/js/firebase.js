@@ -10,6 +10,7 @@
 
   var db = firebase.database();
   var database;
+  var array;
 
   function writeUserData(userId, name, email, imageUrl) {
     firebase.database().ref('users/' + userId).set({
@@ -73,6 +74,9 @@
             $.magnificPopup.close();
           });
 
+
+
+
         } else {
           // No user is signed in.
           $('#sign-in').html('Sign in');
@@ -112,6 +116,8 @@
     		e.preventDefault();
     		$.magnificPopup.close();
     	});
+
+
       $('#login-button').click(function(){
         var email = $('#email-field').val();
         var password = $('#password-field').val();
