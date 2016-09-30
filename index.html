@@ -17,7 +17,6 @@
     <link rel="stylesheet" href="assets/css/magnific-popup.css">
     <!-- custom scripts -->
     <link rel="stylesheet" href="assets/css/style.css">
-
 </head>
 
 <body>
@@ -52,9 +51,97 @@
                         <div class="item submit">
                             <i class="search link icon" id="search-icon"></i>
                         </div>
-                        <a href="#" class="ui item">
+                        <a href="#test-modal" class="ui item popup-modal" id="sign-in">
                           Sign-in
                         </a>
+                        <!--Sign in Modal -->
+                        <div id="test-modal" class="white-popup-block mfp-hide">
+                          <div class="ajax-text-and-image white-popup-block">
+                          	<div class="ajcol">
+                              <div class="ui middle aligned center aligned grid">
+                                <div class="column">
+                                  <h2 class="ui teal image header">
+                                    <img src="assets/images/useum_logo.png" class="image">
+                                    <div class="content">
+                                      Log-in to your account
+                                    </div>
+                                  </h2>
+                                  <form class="ui large form">
+                                    <div class="ui stacked segment">
+                                      <div class="field">
+                                        <div class="ui left icon input">
+                                          <i class="user icon"></i>
+                                          <input type="text" name="email" placeholder="E-mail address" id="email-field">
+                                        </div>
+                                      </div>
+                                      <div class="field">
+                                        <div class="ui left icon input">
+                                          <i class="lock icon"></i>
+                                          <input type="password" name="password" placeholder="Password" id="password-field">
+                                        </div>
+                                      </div>
+                                      <div class="ui fluid large teal button popup-modal-dismiss" id="login-button" href="#">Login</div>
+                                      <p><a class="popup-modal-dismiss" href="#">I don't want to login</a></p>
+                                    </div>
+
+                                    <div class="ui error message"></div>
+
+                                  </form>
+
+                                  <div class="ui message">
+                                    New to us? <a href="#signup-modal" class="ui item popup-modal">Sign Up</a>
+                                  </div>
+                                </div>
+                              </div>
+                          	</div>
+                          	<div style="clear:both; line-height: 0;"></div>
+                          </div>
+                        </div>
+                        <!-- Sign up modal -->
+                        <div id="signup-modal" class="white-popup-block mfp-hide">
+                          <div class="ajax-text-and-image white-popup-block">
+                          	<div class="ajcol">
+                              <div class="ui middle aligned center aligned grid">
+                                <div class="column">
+                                  <h2 class="ui teal image header">
+                                    <img src="assets/images/useum_logo.png" class="image">
+                                    <div class="content">
+                                      Sign-up for an account!
+                                    </div>
+                                  </h2>
+                                  <form class="ui large form">
+                                    <div class="ui segment">
+                                        <div class="ui form">
+                                          <div class="two fields">
+                                            <div class="field">
+                                              <label>email</label>
+                                              <input placeholder="email" id="email-signup" type="text">
+                                            </div>
+                                            <div class="field">
+                                              <label>password</label>
+                                              <input placeholder="password" id="password-signup" type="text">
+                                            </div>
+                                          </div>
+                                          <div class="inline field">
+                                            <div class="ui checkbox">
+                                                <input type="checkbox" name="terms-n-conditions">
+                                                <label>I agree to the terms and conditions.</label>
+                                              </div>
+                                          </div>
+                                          <div class="ui button" id="signup-button">Submit</div>
+                                        </div>
+                                      </div>
+
+                                    <div class="ui error message"></div>
+
+                                  </form>
+
+                                </div>
+                              </div>
+                          	</div>
+                          	<div style="clear:both; line-height: 0;"></div>
+                          </div>
+                        </div>
                     </div>
                 </div>
             </div>
