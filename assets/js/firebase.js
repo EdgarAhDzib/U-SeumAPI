@@ -53,7 +53,7 @@
           database = firebase.database().ref('users/' + user.uid);
           database.on('value', function(snapshot) {
             array = snapshot.val().favoritePics;
-            console.log("array is: " + array);
+            console.log("the retrieved list is: " + array);
             //return array;
           });
 
