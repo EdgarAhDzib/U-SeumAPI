@@ -16,7 +16,7 @@ $(document).ready( function(){
 	//Heart Rating
 	$('.ui.rating')
 	 .rating({
-		 fireOnInit: true.
+		 fireOnInit: true,
 		 onRate: getRating();
 	 })
  ;
