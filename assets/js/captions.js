@@ -13,12 +13,10 @@ $(document).ready( function(){
 		var currentRating = $('.ui.rating').rating('get rating');
 		alert("current rating is : " + currentRating);
 	}
+	
 	//Heart Rating
 	$('.ui.rating')
-	 .rating({
-		 fireOnInit: true,
-		 onRate: getRating();
-	 })
+	 .rating()
  ;
 
  $('.ui.rating').click(function() {
