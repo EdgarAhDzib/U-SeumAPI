@@ -51,6 +51,7 @@
 
     $(function () {
 
+<<<<<<< HEAD
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
           // Retrieves favorite pictures from saved list & adds a new one. Basically everytime we would hit the like button it would call this function.
@@ -72,6 +73,29 @@
             $.magnificPopup.close();
           });
 
+=======
+    // This returns an object of the pictures
+    var pictureData = currentSnap.val().favoritePics;
+    console.log(pictureData);
+
+    // Convert to an array
+    var picArray = Object.keys(pictureData).map(function (key) {
+      return pictureData[key];
+    });
+    console.log(picArray);
+
+    //TODO: Loop through the picures in the array and display them on the screen
+    //
+    for ( var i = 0; i < picArray.length; i++ ) {
+
+      var displayElement = $('<div class="column">');
+      var displayPic = $('<img class="ui fluid large image" src="">').attr("src", picArray[i]);
+
+      displayElement.append(displayPic);
+      $('#favoritePics').append(displayElement);
+
+    }
+>>>>>>> 28c372c382bff3529c7c156182dac7ddba73c861
 
 
 

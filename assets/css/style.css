@@ -29,9 +29,12 @@ ul {
 ul li {
   margin-left: 3px;
 }
-
+.main {
+  min-height: 750px;
+}
 .page-header {
     height: 60px;
+    margin-bottom: 30px;
     background-color: #28A9AF;
 }
 
@@ -46,7 +49,7 @@ ul li {
 }
 
 .footer {
-    height: 150px;  /* Leaving in case we want to define a height later */
+    height: 200px;  /* Leaving in case we want to define a height later */
     background-color: #28A9AF;
     color: #ffffff;
 }
