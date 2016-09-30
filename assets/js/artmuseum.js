@@ -69,6 +69,7 @@ $(document).ready( function(){
 					objArray.push(dataObj);
 					$("#rmBlock"+i).html(imageCell).attr("href",artObj[i].webImage.url);
 					$("#rmBlock"+i).append(RMdiv);
+					//console.log(artObj[i].webImage.url);
 
 					$(".hide").hide();
 
@@ -95,6 +96,7 @@ $(document).ready( function(){
 					imageURL.attr("class","thumbnail");
 					imageURL.attr("src",hamResult[i].images[0].baseimageurl);
 					imageURL.attr("data-title",hamResult[i].title);
+
 
 					if (hamResult[i].century !== null) {
 					dataObj.century = hamResult[i].century;
