@@ -47,7 +47,7 @@
   function checkRating(array) {
       var url = $('#caption-img').attr('src');
       for (var i = 0; i < array.length; i++) {
-        if (url.localeCompare(array[i]) == 0)
+        if (url === array[i])
         console.log("true");
       }
 
