@@ -1,12 +1,14 @@
 $(document).ready( function(){
-	var array;
+	var array = [];
 	var database;
 
 	function addPicture(user, array) {
-    firebase.database().ref('users/' + user.uid + '/favorites').update({
-      picture: array
+    console.log("in add picture");
+    firebase.database().ref('users/' + user.uid).update({
+      favoritePics: array
     });
   }
+
 
 	//Heart Rating
 	$('.ui.rating')
@@ -18,9 +20,9 @@ $(document).ready( function(){
 	 var user = firebase.auth().currentUser;
 	 console.log("user");
 	 if (user) {
-		 database = firebase.database().ref('users/' + user.uid + '/favoritePics');
+		 database = firebase.database().ref('users/' + user.uid);
 		 database.on('value', function(snapshot) {
-			 array = snapshot.val().picture;
+			 array = snapshot.val();
 			 console.log("array is: " + array);
 			 //return array;
 		 });
