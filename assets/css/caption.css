@@ -1,0 +1,29 @@
+#heart-placement {
+  margin-left: 90%;
+  top: -30px;
+  z-index: 2;
+}
+
+
+.ui.heart.rating .icon {
+   color: rgba(33,109,185,.6);
+}
+
+.ajax-text-and-image {
+  max-width:800px; margin: 20px auto; background: #FFF; padding: 0; line-height: 0;
+}
+.ajcol {
+  width: 50%; float:left;
+  border: 1px solid black;
+}
+.ajcol img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+@media all and (max-width:30em) {
+  .ajcol {
+    width: 100%;
+    float:none;
+  }
+}

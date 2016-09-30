@@ -27,7 +27,7 @@ $(document).ready( function(){
 
 	function autoload() {
 		var query = "";
-		var topics = ["Egyptian","Roman","Classical","African","Native American","Celtic","Japan","Greek"];
+		var topics = ["Egyptian","Roman","Classical","African","Native American","Celtic","Japan","Greek","Persian","Oil","Water Color","Sculpture"];
 		var random = Math.floor(Math.random() * topics.length);
 		query = topics[random];
 		var RMapiKey = "T6Z2QzWq";
@@ -61,7 +61,7 @@ $(document).ready( function(){
 					imageCell.attr("src",artObj[i].webImage.url);
 					dataObj.id = "rmBlock"+i;
 					dataObj.image = artObj[i].webImage.url;
-					dataObj.title = artObj[i].longTitle;
+					dataObj.title = artObj[i].title;
 					dataObj.maker = artObj[i].principalOrFirstMaker;
 					dataObj.century = timeperiod;
 					dataObj.origLink = artObj[i].links.web;
@@ -69,6 +69,7 @@ $(document).ready( function(){
 					objArray.push(dataObj);
 					$("#rmBlock"+i).html(imageCell).attr("href",artObj[i].webImage.url);
 					$("#rmBlock"+i).append(RMdiv);
+					//console.log(artObj[i].webImage.url);
 
 					$(".hide").hide();
 
@@ -95,6 +96,7 @@ $(document).ready( function(){
 					imageURL.attr("class","thumbnail");
 					imageURL.attr("src",hamResult[i].images[0].baseimageurl);
 					imageURL.attr("data-title",hamResult[i].title);
+
 
 					if (hamResult[i].century !== null) {
 					dataObj.century = hamResult[i].century;
@@ -148,7 +150,7 @@ $(document).ready( function(){
 	$( ".captions" ).click(function() {
 
 	var thisId = $(this).attr("id");
-	var arrIndex = objArray.findIndex(x=>x.id==thisId);
+	var arrIndex = objArray.findIndex(x>x.id==thisId);
 	//console.log(arrIndex);
 	New_image = objArray[arrIndex].image;
 	Title = objArray[arrIndex].title;
@@ -210,7 +212,7 @@ $(document).ready( function(){
 	      // mfpResponse.data = $(mfpResponse.data).find('#some-element');
 	``
 	      // mfpResponse.data must be a String or a DOM (jQuery) element
-	      var HTML_part1 = '<!DOCTYPE html><html><head><meta charset="utf-8"><title>captions</title></head><body><div class="ajax-text-and-image white-popup-block"><style>.ajax-text-and-image {max-width:800px; margin: 20px auto; background: #FFF; padding: 0; line-height: 0;}.ajcol {width: 50%; float:left;}.ajcol img {width: 100%; height: auto;}@media all and (max-width:30em) {.ajcol {width: 100%;float:none;}}</style><div class="ajcol"><img style="object-fit: contain;" src=';
+	      var HTML_part1 = '<!DOCTYPE html><html><head><meta charset="utf-8"><title>captions</title><script src="assets/js/captions.js"></script></head><body><div class="ajax-text-and-image white-popup-block"><style>.ajax-text-and-image {max-width:800px; margin: 20px auto; background: #FFF; padding: 0; line-height: 0;}.ajcol {width: 50%; float:left;}.ajcol img {width: 100%; height: auto;}@media all and (max-width:30em) {.ajcol {width: 100%;float:none;}}</style><div class="ajcol"><img style="object-fit: contain;" id="caption-img" src=';
 	      var HTML_part2 = '></div><div class="ajcol" style="line-height: 120%;"><div style="padding: 1em"><p><i>'; //Title
 	      var HTML_part3 = '</i><sub> by '; //artist
 	      var HTML_part4 = '</sub></p><p>'; //culture
@@ -221,18 +223,18 @@ $(document).ready( function(){
 	      var HTML_part9 = '<p><a href = "https://en.wikipedia.org/?curid=' + Wikilink + '" target="_blank">https://en.wikipedia.org/?curid=' + Wikilink + '</a><sub> wiki-link</sub></p>'; //creditline
 	      var HTML_part10 = '<p><sub> credit</sub></p>';
 
+
 	      if (Collection_info != "") {
 	      	HTML_part10 += '<p>' + Collection_info + '</p><p><sub> collection</sub></p>';
 	      }
-	      
-	      var HTML_end =  '</div></div><div style="clear:both; line-height: 0;"></div></div></body></html>';
+	      var HTML_end =  '</div><div class="ui massive heart rating" id="heart-placement" data-rating="0" data-max-rating="1"> </div></div><div style="clear:both; line-height: 0;"></div></div></body></html>';
 // Add the Collection to this code
 	      var title = Title;
 	      var artist = Artist;
 	      var culture = Culture;
 	      var century = Century;
 	      var creditline = Creditline;
-		  RM = false;
+		  	RM = false;
 
 	      var parts1To4 = HTML_part1 + New_image + HTML_part2 + title + HTML_part3 + artist + HTML_part4;
 	      if (Culture != "") {
@@ -312,7 +314,8 @@ $.ajax({
 
 			dataObj.id = "rmBlock"+i;
 			dataObj.image = artObj[i].webImage.url;
-			dataObj.title = artObj[i].longTitle;
+			dataObj.title = artObj[i].title;
+			//console.log(dataObj.title);
 			dataObj.maker = artObj[i].principalOrFirstMaker;
 			dataObj.century = timeperiod;
 			dataObj.origLink = artObj[i].links.web;
