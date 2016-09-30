@@ -45,6 +45,11 @@
   }
 
   function checkRating(array) {
+      var url = $('#caption-img').attr('src');
+      for (var i = 0; i < array.length; i++) {
+        if (url.localeCompare(array[i]) == 0)
+        console.log("true");
+      }
 
   }
 
