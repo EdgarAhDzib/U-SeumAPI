@@ -150,6 +150,7 @@ $(document).ready( function(){
 	var thisId = $(this).attr("id");
 	var arrIndex = objArray.findIndex(x=>x.id==thisId);
 	//console.log(arrIndex);
+	if (arrIndex >= 0) {
 	New_image = objArray[arrIndex].image;
 	Title = objArray[arrIndex].title;
 
@@ -196,7 +197,7 @@ $(document).ready( function(){
 				}
 			console.log("century: " + time);
 			*/
-
+		}
 	});
 
 	$('.captions').magnificPopup({
@@ -278,7 +279,8 @@ query = $("input:text[name=searchBar]").val().trim();
 	else {
 		var userId = 12345;
 		database.ref('users/' + userId + '/searchHistory').push({
-				search: query
+				search: query,
+				searchTimeStamp: firebase.database.ServerValue.TIMESTAMP
 			});
 		}
 
@@ -327,6 +329,16 @@ $.ajax({
 
 		}
 	}
+
+	for (i=0; i<7; i++) {
+		var blockHref = $("#rmBlock"+i).attr("href");
+		var arrIndex = objArray.findIndex(x=>x.image==blockHref);		
+		if (arrIndex < 0) {
+			$("#rmBlock"+i).removeAttr("href");
+			$("#rmBlock"+i).html("<img class=\"thumbnail\" src=\"assets/images/useum_logo.png\">");
+		}
+	}
+
 });
 
 $.ajax({
@@ -390,13 +402,20 @@ $.ajax({
 		}
 	}
 
+	for (i=1; i<8; i++) {
+		var blockHref = $("#hamBlock"+i).attr("href");
+		var arrIndex = objArray.findIndex(x=>x.image==blockHref);		
+		if (arrIndex < 0) {
+			$("#hamBlock"+i).removeAttr("href");
+			$("#hamBlock"+i).html("<img class=\"thumbnail\" src=\"assets/images/useum_logo.png\">");
+		}	
+	}
+
 });
 
 return false;
 
 }; //end of click function
-
-}); //end of document ready
 
 function wikipedia(argument,div) {
 	var wikiTopic = "https://en.wikipedia.org/w/api.php?action=query&format=json&gsrlimit=5&generator=search&origin=*&gsrsearch=" + argument + "&prop=extracts&exintro&explaintext&exsentences=1";
@@ -437,3 +456,5 @@ function wikipedia(argument,div) {
 	}
 });
 }
+
+}); //end of document ready
