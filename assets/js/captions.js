@@ -14,10 +14,10 @@ $(document).ready( function(){
       console.log("comparing urls :" + url);
       for (var i = 0; i < array.length; i++) {
         if (url === array[i]) {
-        console.log("true");
+        return true;
 				$('#heart-placement').data("rating", 1);
 			} else {
-				console.log("url "+ i + " is false");
+				return false;
 			}
       }
 
@@ -31,6 +31,7 @@ $(document).ready( function(){
 	//Heart Rating
 	$('.ui.rating')
 	 .rating()
+	 console.log("does this work");
  ;
 
  $('.ui.rating').click(function() {
