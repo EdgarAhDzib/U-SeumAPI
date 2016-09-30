@@ -41,6 +41,7 @@ $(document).ready( function(){
 			 console.log("favorite pics list: " + array);
 			 //return array;
 		 });
+	}
  ;
 
  $('.ui.rating').click(function() {
