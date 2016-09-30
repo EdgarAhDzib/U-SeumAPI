@@ -27,7 +27,7 @@ $(document).ready( function(){
 
 	function autoload() {
 		var query = "";
-		var topics = ["Egyptian","Roman","Classical","African","Native American","Celtic","Japan","Greek"];
+		var topics = ["Egyptian","Roman","Classical","African","Native American","Celtic","Japan","Greek","Persian","Oil","Water Color","Sculpture"];
 		var random = Math.floor(Math.random() * topics.length);
 		query = topics[random];
 		var RMapiKey = "T6Z2QzWq";
