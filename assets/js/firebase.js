@@ -63,6 +63,7 @@
           database.on('value', function(snapshot) {
             console.log("snapshot value: " + snapshot.val());
             array = snapshot.val().favoritePics;
+            checkRating(array);
             console.log("the retrieved list is: " + array);
             //return array;
           });
