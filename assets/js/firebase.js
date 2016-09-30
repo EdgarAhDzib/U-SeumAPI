@@ -11,6 +11,7 @@
   var db = firebase.database();
   var database;
   var array;
+  var userId;
 
   function writeUserData(userId, name, email, imageUrl) {
     firebase.database().ref('users/' + userId).set({
@@ -58,7 +59,7 @@
 
           var pics = [];
           console.log("pics");
-          user.uid
+          userID = user.uid;
           pics.push("http://lh4.ggpht.com/NwCWmjro4h__Ord5RqicIJsJbTY104UditPHR-swB9a7pQRt67KfneX_tBEazLnkNGsWqCvfsZam8Pxj1Ixiqbne7Q=s0");
           addPicture(user,pics);
 
@@ -129,7 +130,6 @@
         $.magnificPopup.close();
       });
 
-      var userId = 12345;
 
       firebase.database().ref().once("value", function(snapshot) {
 
