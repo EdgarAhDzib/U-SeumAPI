@@ -20,7 +20,7 @@ $(document).ready( function(){
 	 if (user) {
 		 database = firebase.database().ref('users/' + user.uid + '/favoritePics');
 		 database.on('value', function(snapshot) {
-			 array = snapshot.val().picture;
+			 array = snapshot.val();
 			 console.log("array is: " + array);
 			 //return array;
 		 });
