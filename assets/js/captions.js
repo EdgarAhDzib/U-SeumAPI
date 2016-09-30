@@ -31,12 +31,6 @@ $(document).ready( function(){
 	//Heart Rating
 	$('.ui.rating')
 	 .rating()
-	 console.log("does this work");
- ;
-
- $('.ui.rating').click(function() {
-	 var url = $('#caption-img').attr('src');
-	 var db = firebase.database();
 	 var user = firebase.auth().currentUser;
 	 //console.log("user");
 	 if (user) {
@@ -44,6 +38,20 @@ $(document).ready( function(){
 		 database.once('value', function(snapshot) {
 			 array = snapshot.val();
 			 checkRating(array);
+			 console.log("favorite pics list: " + array);
+			 //return array;
+		 });
+ ;
+
+ $('.ui.rating').click(function() {
+	 var url = $('#caption-img').attr('src');
+	 var user = firebase.auth().currentUser;
+	 //console.log("user");
+	 if (user) {
+		 database = firebase.database().ref('users/' + user.uid + '/favoritePics');
+		 database.once('value', function(snapshot) {
+			 array = snapshot.val();
+			 //checkRating(array);
 			 console.log("favorite pics list: " + array);
 			 //return array;
 		 });
