@@ -16,12 +16,20 @@
     firebase.database().ref('users/' + userId).set({
       username: name,
       email: email,
-      profile_picture : imageUrl
+      profile_picture : imageUrl,
+      firstName: fName,
+      joinDate: jDate,
+      shortBio: sBio,
+      timeSpent: tSpent,
+      viewCount: vCount,
+      longBio: lBio,
+      friendCount: fCount,
+      favCount: favCount
     });
   }
 
   function addPicture(user, array) {
-    console.log("in add picture");
+    //console.log("in add picture");
     firebase.database().ref('users/' + user.uid).update({
       favoritePics: array
     });
