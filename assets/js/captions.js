@@ -15,7 +15,9 @@ $(document).ready( function(){
       for (var i = 0; i < array.length; i++) {
         if (url === array[i]) {
         console.log("true");
-        }
+			} else {
+				console.log("false");
+			}
       }
 
   }
