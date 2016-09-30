@@ -278,7 +278,7 @@ query = $("input:text[name=searchBar]").val().trim();
 	}
 	else {
 		var userId = 12345;
-		database.ref('users/' + userId + '/searchHistory').push({
+		firebase.database().ref('users/' + userId + '/searchHistory').push({
 				search: query,
 				searchTimeStamp: firebase.database.ServerValue.TIMESTAMP
 			});
