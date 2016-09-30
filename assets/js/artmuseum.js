@@ -148,7 +148,7 @@ $(document).ready( function(){
 	$( ".captions" ).click(function() {
 
 	var thisId = $(this).attr("id");
-	var arrIndex = objArray.findIndex(x=>x.id==thisId);
+	var arrIndex = objArray.findIndex(x>x.id==thisId);
 	//console.log(arrIndex);
 	New_image = objArray[arrIndex].image;
 	Title = objArray[arrIndex].title;

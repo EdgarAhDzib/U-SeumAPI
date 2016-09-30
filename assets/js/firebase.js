@@ -53,18 +53,18 @@
 
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
-          /* Retrieves favorite pictures from saved list & adds a new one. Basically everytime we would hit the like button it would call this function.
+          // Retrieves favorite pictures from saved list & adds a new one. Basically everytime we would hit the like button it would call this function.
           database = firebase.database().ref('users/' + user.uid + '/favorites');
           database.on('value', function(snapshot) {
             array = snapshot.val().picture;
-            //console.log("array is: " + array);
+            console.log("array is: " + array);
             //return array;
           });
           var pics = array;
           console.log("pics");
           pics.push("new image url");
           addPicture(user,pics);
-          */
+
           console.log("signed in");
           $('#sign-in').html('Sign out');
           $('#sign-in').click(function(){
