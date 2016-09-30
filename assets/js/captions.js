@@ -15,6 +15,7 @@ $(document).ready( function(){
       for (var i = 0; i < array.length; i++) {
         if (url === array[i]) {
         console.log("true");
+				$('#heart-placement').data("rating", 1);
 			} else {
 				console.log("url "+ i + " is false");
 			}
