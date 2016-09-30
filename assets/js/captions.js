@@ -14,8 +14,8 @@ $(document).ready( function(){
       console.log("comparing urls :" + url);
       for (var i = 0; i < array.length; i++) {
         if (url === array[i]) {
+					$('#heart-placement').data("rating", 1);
         return true;
-				$('#heart-placement').data("rating", 1);
 			} else {
 				return false;
 			}
