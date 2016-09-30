@@ -11,6 +11,7 @@
   var db = firebase.database();
   var database;
   var array;
+  var userId;
 
   function writeUserData(userId, name, email, imageUrl) {
     firebase.database().ref('users/' + userId).set({
@@ -48,12 +49,7 @@
             //return array;
           });
 
-          var pics = [];
-          console.log("pics");
-          user.uid
-          pics.push("http://lh4.ggpht.com/NwCWmjro4h__Ord5RqicIJsJbTY104UditPHR-swB9a7pQRt67KfneX_tBEazLnkNGsWqCvfsZam8Pxj1Ixiqbne7Q=s0");
-          addPicture(user,pics);
-
+          userID = user.uid;
 
           console.log("signed in");
           $('#sign-in').html('Sign out');
@@ -121,10 +117,10 @@
         $.magnificPopup.close();
       });
 
-      var userId = 12345;
+
 
       firebase.database().ref().once("value", function(snapshot) {
-
+        if (userId) {
         // Account settings page
         // Let's find the user's data saved in the database
         var currentSnap = snapshot.child("/users/" + userId);
@@ -159,10 +155,12 @@
           $('#favoritePics').append(displayElement);
 
         }
+      }
 
     }, function(errorObject) {
         console.log("The read failed: " + errorObject.code);
     });
+
 
 
     });
