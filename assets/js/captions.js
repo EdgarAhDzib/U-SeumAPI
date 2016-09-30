@@ -16,8 +16,7 @@ $(document).ready( function(){
 
 	//Heart Rating
 	$('.ui.rating')
-	.rating('setting', 'onRate', function(value) {
-		 // your amazing code here
+	 .rating()
  ;
 
  $('.ui.rating').click(function() {
@@ -30,7 +29,7 @@ $(document).ready( function(){
 		 database = firebase.database().ref('users/' + user.uid + '/favoritePics');
 		 database.on('value', function(snapshot) {
 			 array = snapshot.val();
-			 console.log("click, current picture list is: " + array);
+			 console.log("favorite pics list: " + array);
 			 //return array;
 		 });
 		 var updated_list = array;
