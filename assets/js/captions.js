@@ -13,13 +13,14 @@ $(document).ready( function(){
 		var currentRating = $('.ui.rating').rating('get rating');
 		alert("current rating is : " + currentRating);
 	}
-	
+
 	//Heart Rating
 	$('.ui.rating')
 	 .rating()
  ;
 
  $('.ui.rating').click(function() {
+	 getRating();
 	 var url = $('#caption-img').attr('src');
 	 var db = firebase.database();
 	 var user = firebase.auth().currentUser;
