@@ -9,6 +9,17 @@ $(document).ready( function(){
     });
   }
 
+	function checkRating(array) {
+      var url = $('#caption-img').attr('src');
+      console.log("comparing urls :" + url);
+      for (var i = 0; i < array.length; i++) {
+        if (url === array[i]) {
+        console.log("true");
+        }
+      }
+
+  }
+
 	function getRating() {
 		var currentRating = $('.ui.rating').rating('get rating');
 		alert("current rating is : " + currentRating);
@@ -20,7 +31,6 @@ $(document).ready( function(){
  ;
 
  $('.ui.rating').click(function() {
-	 getRating();
 	 var url = $('#caption-img').attr('src');
 	 var db = firebase.database();
 	 var user = firebase.auth().currentUser;
@@ -29,6 +39,7 @@ $(document).ready( function(){
 		 database = firebase.database().ref('users/' + user.uid + '/favoritePics');
 		 database.on('value', function(snapshot) {
 			 array = snapshot.val();
+			 checkRating(array);
 			 console.log("favorite pics list: " + array);
 			 //return array;
 		 });

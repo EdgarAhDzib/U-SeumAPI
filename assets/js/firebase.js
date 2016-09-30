@@ -44,14 +44,7 @@
     });
   }
 
-  function checkRating(array) {
-      var url = $('#caption-img').attr('src');
-      for (var i = 0; i < array.length; i++) {
-        if (url === array[i])
-        console.log("true");
-      }
 
-  }
 
     $(function () {
 
@@ -63,7 +56,7 @@
           database.on('value', function(snapshot) {
             console.log("snapshot value: " + snapshot.val());
             array = snapshot.val().favoritePics;
-            checkRating(array);
+            //checkRating(array);
             console.log("the retrieved list is: " + array);
             //return array;
           });
