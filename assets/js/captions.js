@@ -23,7 +23,7 @@ $(document).ready( function(){
 		 database = firebase.database().ref('users/' + user.uid);
 		 database.on('value', function(snapshot) {
 			 array = snapshot.val();
-			 console.log("array is: " + array[0]);
+			 console.log("click, array is: " + array);
 			 //return array;
 		 });
 		 var updated_list = array;
