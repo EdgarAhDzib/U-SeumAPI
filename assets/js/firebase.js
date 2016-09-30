@@ -50,9 +50,9 @@
         if (user) {
 
           // Retrieves favorite pictures from saved list & adds a new one. Basically everytime we would hit the like button it would call this function.
-          database = firebase.database().ref('users/' + user.uid + '/favoritePics');
+          database = firebase.database().ref('users/' + user.uid);
           database.on('value', function(snapshot) {
-            array = snapshot.val();
+            array = snapshot.val().favoritePics;
             console.log("array is: " + array);
             //return array;
           });
