@@ -9,11 +9,18 @@ $(document).ready( function(){
     });
   }
 
-
+	function getRating() {
+		var currentRating = $('.ui.rating').rating('get rating');
+		alert("current rating is : " + currentRating);
+	}
 	//Heart Rating
 	$('.ui.rating')
-	 .rating()
+	 .rating({
+		 fireOnInit: true.
+		 onRate: getRating();
+	 })
  ;
+
  $('.ui.rating').click(function() {
 	 var url = $('#caption-img').attr('src');
 	 var db = firebase.database();
