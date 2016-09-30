@@ -82,7 +82,7 @@
     		focus: '#username',
     		modal: true
     	});
-      
+
       $('#signup-button').click(function(){
         var email = $('#email-signup').val();
         var password = $('#password-signup').val();
@@ -129,7 +129,7 @@
 
 
       firebase.database().ref().once("value", function(snapshot) {
-        if (userId) {
+        if (user) {
         // Account settings page
         // Let's find the user's data saved in the database
         var currentSnap = snapshot.child("/users/" + userId);
@@ -145,7 +145,7 @@
 
         // This returns an object of the pictures
         var pictureData = currentSnap.val().favoritePics;
-        //console.log(pictureData);
+        console.log(pictureData);
 
         // Convert to an array
         var picArray = Object.keys(pictureData).map(function (key) {
