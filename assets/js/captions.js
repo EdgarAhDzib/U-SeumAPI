@@ -16,7 +16,7 @@ $(document).ready( function(){
         if (url === array[i]) {
         console.log("true");
 			} else {
-				console.log("false");
+				console.log("url "+ i + " is false");
 			}
       }
 
