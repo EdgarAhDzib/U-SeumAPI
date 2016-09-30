@@ -150,7 +150,7 @@ $(document).ready( function(){
 	$( ".captions" ).click(function() {
 
 	var thisId = $(this).attr("id");
-	var arrIndex = objArray.findIndex(x>x.id==thisId);
+	var arrIndex = objArray.findIndex(x=>x.id==thisId);
 	//console.log(arrIndex);
 	New_image = objArray[arrIndex].image;
 	Title = objArray[arrIndex].title;
@@ -187,17 +187,6 @@ $(document).ready( function(){
 	Creditline = objArray[arrIndex].museum;
 	Sourcelink = objArray[arrIndex].origLink;
 
-			/* Needs integration
-			var time = $(this).find('.hide').data('century');
-			var matches = time.match(/\d+/g);
-				if (matches != null) {
-					//console.log("is a number");
-					Century = time;
-				} else {
-				Century = "Unknown";
-				}
-			console.log("century: " + time);
-			*/
 
 	});
 
@@ -205,13 +194,7 @@ $(document).ready( function(){
 	  type: 'ajax',
 	  callbacks: {
 	    parseAjax: function(mfpResponse) {
-	      // mfpResponse.data is a "data" object from ajax "success" callback
-	      // for simple HTML file, it will be just String
-	      // You may modify it to change contents of the popup
-	      // For example, to show just #some-element:
-	      // mfpResponse.data = $(mfpResponse.data).find('#some-element');
-	``
-	      // mfpResponse.data must be a String or a DOM (jQuery) element
+
 	      var HTML_part1 = '<!DOCTYPE html><html><head><meta charset="utf-8"><title>captions</title><script src="assets/js/captions.js"></script></head><body><div class="ajax-text-and-image white-popup-block"><style>.ajax-text-and-image {max-width:800px; margin: 20px auto; background: #FFF; padding: 0; line-height: 0;}.ajcol {width: 50%; float:left;}.ajcol img {width: 100%; height: auto;}@media all and (max-width:30em) {.ajcol {width: 100%;float:none;}}</style><div class="ajcol"><img style="object-fit: contain;" id="caption-img" src=';
 	      var HTML_part2 = '></div><div class="ajcol" style="line-height: 120%;"><div style="padding: 1em"><p><i>'; //Title
 	      var HTML_part3 = '</i><sub> by '; //artist
