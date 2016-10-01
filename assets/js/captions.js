@@ -11,7 +11,7 @@ $(document).ready( function(){
 
 	function checkRating(array) {
       var url = $('#caption-img').attr('src');
-      console.log("comparing urls :" + url);
+			console.log("length of array is : " + array.length);
       for (var i = 0; i < array.length; i++) {
 				console.log("array value " + i + " is " + array[i]);
 				if (url === array[i]) {
