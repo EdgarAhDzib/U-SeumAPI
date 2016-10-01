@@ -320,12 +320,13 @@ $(document).ready( function(){
 	      }
 	      var parts7To10 = HTML_part7 + Wiki_blurb + HTML_part8 + HTML_part9 + creditline + HTML_part10 + HTML_end;
 	      var newData = parts1To4 + parts7To10;
+
 				var views;
 				var database = firebase.database().ref('users/' + user.uid + '/viewCount');
 	 		 	database.on('value', function(snapshot) {
 	 			 views = snapshot.val();
 	 		 	});
-				updated_views = views+1;
+				var updated_views = views+1;
 				firebase.database().ref('users/' + user.uid).update({
 					viewCount: updated_views;
 		    });
