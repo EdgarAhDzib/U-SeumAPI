@@ -79,7 +79,7 @@ $(document).ready( function(){
 											var langJSON = JSON.parse(this.response);
 											engTitle = langJSON.translation;
 											rmForWiki = engTitle;
-						
+
 											var rmEngObj = {id:"",englishTitle:""};
 											rmEngObj.id = "rmBlock"+counter;
 											rmEngObj.englishTitle = engTitle;
@@ -126,7 +126,7 @@ $(document).ready( function(){
 						rmForWiki = artObj[i].title;
 						dataObj.title = artObj[i].longTitle;
 					}
-					
+
 					dataObj.maker = artObj[i].principalOrFirstMaker;
 					dataObj.century = timeperiod;
 					dataObj.origLink = artObj[i].links.web;
@@ -139,7 +139,7 @@ $(document).ready( function(){
 					rmArray.push(rmEngObj);
 					console.log(rmArray);
 */
-					
+
 					$("#rmBlock"+i).html(imageCell).attr("href",artObj[i].webImage.url);
 					$("#rmBlock"+i).append(RMdiv);
 
@@ -222,6 +222,7 @@ $(document).ready( function(){
 
 	var thisId = $(this).attr("id");
 	var arrIndex = objArray.findIndex(x=>x.id==thisId);
+
 	var rmIndex = rmArray.findIndex(x=>x.id==thisId);
 
 	if (rmIndex >= 0) {
@@ -261,31 +262,14 @@ $(document).ready( function(){
 	Creditline = objArray[arrIndex].museum;
 	Sourcelink = objArray[arrIndex].origLink;
 
-			/* Needs integration
-			var time = $(this).find('.hide').data('century');
-			var matches = time.match(/\d+/g);
-				if (matches != null) {
-					//console.log("is a number");
-					Century = time;
-				} else {
-				Century = "Unknown";
-				}
-			console.log("century: " + time);
-			*/
-		}
 	});
 
 	$('.captions').magnificPopup({
 	  type: 'ajax',
 	  callbacks: {
 	    parseAjax: function(mfpResponse) {
-	      // mfpResponse.data is a "data" object from ajax "success" callback
-	      // for simple HTML file, it will be just String
-	      // You may modify it to change contents of the popup
-	      // For example, to show just #some-element:
-	      // mfpResponse.data = $(mfpResponse.data).find('#some-element');
-	      // mfpResponse.data must be a String or a DOM (jQuery) element
-	      var HTML_part1 = '<!DOCTYPE html><html><head><meta charset="utf-8"><title>captions</title><script src="assets/js/captions.js"></script></head><body><div class="ajax-text-and-image white-popup-block"><style>.ajax-text-and-image {max-width:800px; margin: 20px auto; background: #FFF; padding: 0; line-height: 0;}.ajcol {width: 50%; float:left;}.ajcol img {width: 100%; height: auto;}@media all and (max-width:30em) {.ajcol {width: 100%;float:none;}}</style><div class="ajcol"><img style="object-fit: contain;" src=';
+
+	      var HTML_part1 = '<!DOCTYPE html><html><head><meta charset="utf-8"><title>captions</title><script src="assets/js/captions.js"></script></head><body><div class="ajax-text-and-image white-popup-block"><style>.ajax-text-and-image {max-width:800px; margin: 20px auto; background: #FFF; padding: 0; line-height: 0;}.ajcol {width: 50%; float:left;}.ajcol img {width: 100%; height: auto;}@media all and (max-width:30em) {.ajcol {width: 100%;float:none;}}</style><div class="ajcol"><img style="object-fit: contain;" id="caption-img" src=';
 	      var HTML_part2 = '></div><div class="ajcol" style="line-height: 120%;"><div style="padding: 1em"><p><i>'; //Title
 	      var HTML_part3 = '</i></p><p>'; //artist
 	      var HTML_part4 = '</p><p>'; //culture
@@ -301,7 +285,7 @@ $(document).ready( function(){
 	      }
 	      var HTML_end =  '</div><div class="ui massive heart rating" id="heart-placement" data-rating="0" data-max-rating="1"> </div></div><div style="clear:both; line-height: 0;"></div></div></body></html>';
 	      var title = Title;
-	      
+
 	      if (englishTrans != "") {
 	      	title = Title + "<p>(<em>" + englishTrans + "</em>)</p>";
 	      }
@@ -466,7 +450,7 @@ $.ajax({
 
 	for (i=0; i<7; i++) {
 		var blockHref = $("#rmBlock"+i).attr("href");
-		var arrIndex = objArray.findIndex(x=>x.image==blockHref);		
+		var arrIndex = objArray.findIndex(x=>x.image==blockHref);
 		if (arrIndex < 0) {
 			$("#rmBlock"+i).removeAttr("href");
 			$("#rmBlock"+i).html("<img class=\"thumbnail\" src=\"assets/images/useum_logo.png\">");
@@ -538,11 +522,11 @@ $.ajax({
 
 	for (i=1; i<8; i++) {
 		var blockHref = $("#hamBlock"+i).attr("href");
-		var arrIndex = objArray.findIndex(x=>x.image==blockHref);		
+		var arrIndex = objArray.findIndex(x=>x.image==blockHref);
 		if (arrIndex < 0) {
 			$("#hamBlock"+i).removeAttr("href");
 			$("#hamBlock"+i).html("<img class=\"thumbnail\" src=\"assets/images/useum_logo.png\">");
-		}	
+		}
 	}
 
 });
