@@ -48,7 +48,7 @@
 
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
-          userId = firebase.auth().currentUser;
+          userId = user.uid;
           console.log("signed in");
           $('#sign-in').html('Sign out');
           $('#sign-in').click(function(){
