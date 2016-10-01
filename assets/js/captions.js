@@ -1,5 +1,5 @@
 $(document).ready( function(){
-	var array = [];
+	var array;
 	var database;
 
 	function addPicture(user, array) {
@@ -25,11 +25,6 @@ $(document).ready( function(){
 			return false;
 
   }
-
-	function getRating() {
-		var currentRating = $('.ui.rating').rating('get rating');
-		alert("current rating is : " + currentRating);
-	}
 
 	//Heart Rating
 	$('.ui.rating')
@@ -57,7 +52,7 @@ $(document).ready( function(){
 		 database.once('value', function(snapshot) {
 			 array = snapshot.val();
 			 //checkRating(array);
-			 //console.log("favorite pics list: " + array);
+			 console.log("favorite pics list: " + array);
 			 //return array;
 		 });
 		 var updated_list = array;
