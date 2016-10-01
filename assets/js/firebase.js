@@ -114,7 +114,7 @@ $(function() {
 
                 $.magnificPopup.close();
             });
-
+});
             if (firebase.auth().currentUser) {
                 firebase.database().ref().once("value", function(snapshot) {
 
@@ -131,7 +131,7 @@ $(function() {
                     $('#viewCount').html(currentSnap.val().viewCount);
                     $('#timeSpent').html(currentSnap.val().timeSpent);
 
-                    var bioImageElement = $('<img src="">').attr("src", currentSnap.val().bioPic);
+                    var bioImageElement = $('<img src="">').attr("src", currentSnap.val().profile_picture);
 
                     $('#bioImage').append(bioImageElement);
 
@@ -144,7 +144,7 @@ $(function() {
                         return pictureData[key];
                     });
                     //console.log(picArray);
-
+                    console.log(picArray);
                     //TODO: Loop through the picures in the array and display them on the screen
                     //
                     for (var i = 0; i < picArray.length; i++) {
@@ -160,4 +160,4 @@ $(function() {
                 }, function(errorObject) {
                     console.log("The read failed: " + errorObject.code);
                 });
-            }
+            };
