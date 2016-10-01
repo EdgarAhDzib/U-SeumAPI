@@ -9,11 +9,11 @@
   firebase.initializeApp(config);
 
 var database = firebase.database();
-var userId = "12345";
+var user = firebase.auth().currentUser;
 
 firebase.database().ref().once("value", function(snapshot) {
 
-    var currentSnap = snapshot.child("/users/" + userId + "/searchHistory");
+    var currentSnap = snapshot.child("/users/" + user.uid + "/searchHistory");
     var searchData = currentSnap.val();
 
     var searchArray = Object.keys(searchData).map(function (key) {
