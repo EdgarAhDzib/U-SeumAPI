@@ -5,7 +5,7 @@ $(document).ready( function(){
 	function addPicture(user, array) {
     console.log("user is :" + user);
 		console.log("array is :" + array);
-    firebase.database().ref('users/' + user.uid).set({
+    firebase.database().ref('users/' + user.uid).update({
       favoritePics: array
     });
   }
