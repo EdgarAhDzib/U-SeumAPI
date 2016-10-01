@@ -59,7 +59,7 @@ $(document).ready( function(){
 		 updated_list.push(url);
 		 */
 		 firebase.database().ref('users/' + user.uid).update({
-       favoritePics: "test"
+       favoritePics: array
      });
 	 } else {
 		 console.log("user not logged in, cannot save pics");
