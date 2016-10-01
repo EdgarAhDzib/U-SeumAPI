@@ -5,7 +5,7 @@ console.log("user is :" + user);
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
         console.log("is this working. plz let it be");
-        user =  = firebase.auth().currentUser;
+        user = firebase.auth().currentUser;
 
         console.log("signed in");
         $('#sign-in').html('Sign out');
