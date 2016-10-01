@@ -347,14 +347,14 @@ $("input:text[name=searchBar]").keypress(function(event) {
 $(document).on("click", ".submit", searchTheMuseums);
 
 function searchTheMuseums() {
+var user = firebase.auth().currentUser;
 query = $("input:text[name=searchBar]").val().trim();
 
 	if (query === "") {
     	$('#searchInput').transition('slide left');
 	}
 	else {
-		var userId = 12345;
-		firebase.database().ref('users/' + userId + '/searchHistory').push({
+		firebase.database().ref('users/' + user.uid + '/searchHistory').push({
 				search: query,
 				searchTimeStamp: firebase.database.ServerValue.TIMESTAMP
 			});
