@@ -55,7 +55,7 @@ $(document).ready( function(){
 			 console.log("favorite pics list: " + array);
 			 //return array;
 		 });
-		 log("url is : " + url);
+		 console.log("url is : " + url);
 		 var updated_list = array;
 		 updated_list.push(url);
 		 addPicture(user,updated_list);
