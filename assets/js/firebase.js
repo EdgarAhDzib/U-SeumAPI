@@ -11,7 +11,6 @@
   var db = firebase.database();
   var database;
   var array;
-  var userId;
 
   function writeUserData(userId, name, email, imageUrl) {
     firebase.database().ref('users/' + userId).set({
@@ -29,12 +28,6 @@
     });
   }
 
-  function addPicture(user, array) {
-    //console.log("in add picture");
-    firebase.database().ref('users/' + user.uid).update({
-      favoritePics: array
-    });
-  }
 
   function signOut() {
     firebase.auth().signOut().then(function() {
@@ -50,6 +43,7 @@
         if (user) {
           console.log("is this working. plz let it be");
           userId = user.uid;
+
           console.log("signed in");
           $('#sign-in').html('Sign out');
           $('#sign-in').click(function(){
@@ -116,47 +110,4 @@
         $.magnificPopup.close();
       });
 
-      if (firebase.auth().currentUser) {
-      firebase.database().ref().once("value", function(snapshot) {
-
-        // Account settings page
-        // Let's find the user's data saved in the database
-        var currentSnap = snapshot.child("/users/" + userId);
-
-        $('#cardName').html(currentSnap.val().firstName);
-        $('#joinDate').html("Joined: " + currentSnap.val().joinDate);
-        $('#shortBio').html(currentSnap.val().shortBio);
-        $('#friendCount').html('<i class="user icon"></i>' + currentSnap.val().friendCount + " Friends");
-        $('#longBio').html(currentSnap.val().longBio);
-        $('#favCount').html(currentSnap.val().favCount);
-        $('#viewCount').html(currentSnap.val().viewCount);
-        $('#timeSpent').html(currentSnap.val().timeSpent);
-
-        // This returns an object of the pictures
-        var pictureData = currentSnap.val().favoritePics;
-        //console.log(pictureData);
-
-        // Convert to an array
-        var picArray = Object.keys(pictureData).map(function (key) {
-          return pictureData[key];
-        });
-        //console.log(picArray);
-
-        //TODO: Loop through the picures in the array and display them on the screen
-        //
-        for ( var i = 0; i < picArray.length; i++ ) {
-
-          var displayElement = $('<div class="column">');
-          var displayPic = $('<img class="ui fluid large image" src="">').attr("src", picArray[i]);
-
-          displayElement.append(displayPic);
-          $('#favoritePics').append(displayElement);
-
-        }
-
-    }, function(errorObject) {
-        console.log("The read failed: " + errorObject.code);
-    });
-
-    }
     });
