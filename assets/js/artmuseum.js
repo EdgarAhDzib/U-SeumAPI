@@ -501,6 +501,8 @@ $.ajax({
 			}
 			if (hamResult[i].peoplecount > 0) {
 				dataObj.maker = hamResult[i].people[0].displayname;
+			} else {
+				dataObj.maker = "unknown";
 			}
 
 			dataObj.id = "hamBlock"+i;
