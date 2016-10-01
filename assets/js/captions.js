@@ -58,7 +58,7 @@ $(document).ready( function(){
 		 var updated_list = array;
 		 updated_list.push(url);
 		 */
-		 console.log("updating");
+		 console.log("updating: " + array);
 		 firebase.database().ref('users/' + user.uid).update({
        favoritePics: array
      });
