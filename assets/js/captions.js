@@ -42,7 +42,7 @@ $(document).ready( function(){
 		 database.once('value', function(snapshot) {
 			 array = snapshot.val();
 			 checkRating(array);
-			 console.log("favorite pics list: " + array);
+			 //console.log("favorite pics list: " + array);
 			 //return array;
 		 });
 	}
@@ -57,7 +57,7 @@ $(document).ready( function(){
 		 database.once('value', function(snapshot) {
 			 array = snapshot.val();
 			 //checkRating(array);
-			 console.log("favorite pics list: " + array);
+			 //console.log("favorite pics list: " + array);
 			 //return array;
 		 });
 		 var updated_list = array;
