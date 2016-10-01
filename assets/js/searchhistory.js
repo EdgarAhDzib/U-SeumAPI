@@ -9,7 +9,7 @@
   firebase.initializeApp(config);
 
 var database = firebase.database();
-var userId = "12345";
+var userId = user.uid;
 
 firebase.database().ref().once("value", function(snapshot) {
 
