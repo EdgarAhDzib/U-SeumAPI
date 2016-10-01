@@ -13,8 +13,10 @@ $(document).ready( function(){
       var url = $('#caption-img').attr('src');
       console.log("comparing urls :" + url);
       for (var i = 0; i < array.length; i++) {
-        if (url === array[i]) {
+				console.log("array value " + i + " is " + array[i]);
+				if (url === array[i]) {
 					$('#heart-placement').data("rating", 1);
+					console.log("true");
         return true;
 			} else {
 				return false;
