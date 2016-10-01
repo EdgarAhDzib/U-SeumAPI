@@ -53,11 +53,10 @@ $(document).ready( function(){
 			 //checkRating(array);
 			 //return array;
 		 });
-		 console.log("favorite pics list: " + array);
-		 var updated_list = array;
+
 		 updated_list.push(url);
 		 firebase.database().ref('users/' + user.uid).update({
-       favoritePics: updated_list
+       favoritePics: "test"
      });
 	 } else {
 		 console.log("user not logged in, cannot save pics");
