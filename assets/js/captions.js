@@ -3,7 +3,7 @@ $(document).ready( function(){
 	var database;
 
 	function addPicture(user, array) {
-    console.log("in add picture");
+    //console.log("in add picture");
     firebase.database().ref('users/' + user.uid).update({
       favoritePics: array
     });
@@ -48,11 +48,11 @@ $(document).ready( function(){
 	 var user = firebase.auth().currentUser;
 	 //console.log("user");
 	 if (user) {
-		 database = firebase.database().ref('users/' + user.uid);
+		 database = firebase.database().ref('users/' + user.uid + '/favoritePics');
 		 database.on('value', function(snapshot) {
-			 array = snapshot.val().favoritePics;
+			 array = snapshot.val();
 			 //checkRating(array);
-			 console.log("favorite pics list: " + array);
+			 //console.log("favorite pics list: " + array);
 			 //return array;
 		 });
 		 var updated_list = array;
