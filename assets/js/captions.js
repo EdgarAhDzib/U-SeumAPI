@@ -1,8 +1,10 @@
 $(document).ready( function(){
-	var array = [];
+	var array;
 	var database;
 
+
 	function addPicture(user, array) {
+    //console.log("in add picture");
     firebase.database().ref('users/' + user.uid).update({
       favoritePics: array
     });
@@ -11,13 +13,12 @@ $(document).ready( function(){
 	function checkRating(array) {
 			//getRating();
       var url = $('#caption-img').attr('src');
-			console.log("length of array is : " + array.length);
+			//console.log("length of array is : " + array.length);
       for (var i = 0; i < array.length; i++) {
-				console.log("array value " + i + " is " + array[i]);
+				//console.log("array value " + i + " is " + array[i]);
 				if (url === array[i]) {
 					$('.icon').addClass("active");
-					console.log("true");
-					//getRating();
+					//console.log("true");
         return true;
 				}
       }
@@ -31,12 +32,12 @@ $(document).ready( function(){
 	 var user = firebase.auth().currentUser;
 	 //console.log("user");
 	 if (user) {
-		 console.log("in this code");
+		 //console.log("in this code");
 		 database = firebase.database().ref('users/' + user.uid + '/favoritePics');
 		 database.once('value', function(snapshot) {
 			 array = snapshot.val();
-			 checkRating(array);
 			 //console.log("favorite pics list: " + array);
+			 checkRating(array);
 			 //return array;
 		 });
 	}
@@ -50,7 +51,11 @@ $(document).ready( function(){
 		 database = firebase.database().ref('users/' + user.uid + '/favoritePics');
 		 database.on('value', function(snapshot) {
 			 array = snapshot.val();
+			 //checkRating(array);
+			 //console.log("favorite pics list: " + array);
+			 //return array;
 		 });
+		 //console.log("url is : " + url);
 		 var updated_list = array;
 		 updated_list.push(url);
 		 addPicture(user,updated_list);
@@ -59,5 +64,4 @@ $(document).ready( function(){
 	 }
 	 return false;
  });
-
 });
