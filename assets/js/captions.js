@@ -4,9 +4,10 @@ $(document).ready( function(){
 
 
 	function addPicture(user, array) {
-    console.log("user is :" + user);
-		console.log("array is :" + array);
-
+    //console.log("in add picture");
+    firebase.database().ref('users/' + user.uid).update({
+      favoritePics: array
+    });
   }
 
 	function checkRating(array) {
@@ -51,21 +52,15 @@ $(document).ready( function(){
 		 database.once('value', function(snapshot) {
 			 array = snapshot.val();
 			 //checkRating(array);
+			 console.log("favorite pics list: " + array);
 			 //return array;
 		 });
-
-		 //console.log("favorite pics list: " + array);
 		 var updated_list = array;
 		 updated_list.push(url);
-
-		 console.log("updating: " + array);
-		 firebase.database().ref('users/' + user.uid).update({
-       favoritePics: updated_list
-     });
+		 addPicture(user,updated_list);
 	 } else {
 		 console.log("user not logged in, cannot save pics");
 	 }
 	 return false;
  });
-
 });

@@ -11,7 +11,6 @@
   var db = firebase.database();
   var database;
   var array;
-  var userId;
 
   function writeUserData(userId, name, email, imageUrl) {
     firebase.database().ref('users/' + userId).set({
@@ -42,7 +41,6 @@
 
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
-          userId = user.uid;
           console.log("signed in");
           $('#sign-in').html('Sign out');
           $('#sign-in').click(function(){
