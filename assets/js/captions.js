@@ -26,6 +26,11 @@ $(document).ready( function(){
 
   }
 
+	function getRating() {
+		var currentRating = $('.ui.rating').rating('get rating');
+		alert("current rating is : " + currentRating);
+	}
+
 	//Heart Rating
 	$('.ui.rating')
 	 .rating()
@@ -49,7 +54,7 @@ $(document).ready( function(){
 	 //console.log("user");
 	 if (user) {
 		 database = firebase.database().ref('users/' + user.uid + '/favoritePics');
-		 database.on('value', function(snapshot) {
+		 database.once('value', function(snapshot) {
 			 array = snapshot.val();
 			 //checkRating(array);
 			 //console.log("favorite pics list: " + array);
