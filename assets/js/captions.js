@@ -19,7 +19,6 @@ $(document).ready( function(){
 				if (url === array[i]) {
 					$('.icon').addClass("active");
 					console.log("true");
-					//getRating();
         return true;
 				}
       }
