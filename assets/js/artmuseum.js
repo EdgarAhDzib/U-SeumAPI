@@ -124,7 +124,7 @@ $(document).ready( function(){
 					//console.log(engTitle);
 					if (engTitle == "") {
 						rmForWiki = artObj[i].title;
-						dataObj.title = artObj[i].longTitle;
+						dataObj.title = artObj[i].title;
 					}
 
 					dataObj.maker = artObj[i].principalOrFirstMaker;
@@ -287,10 +287,10 @@ $(document).ready( function(){
 	      // mfpResponse.data must be a String or a DOM (jQuery) element
 	      var HTML_part1 = '<!DOCTYPE html><html><head><meta charset="utf-8"><title>captions</title><script src="assets/js/captions.js"></script></head><body><div class="ajax-text-and-image white-popup-block"><style>.ajax-text-and-image {max-width:800px; margin: 20px auto; background: #FFF; padding: 0; line-height: 0;}.ajcol {width: 50%; float:left;}.ajcol img {width: 100%; height: auto;}@media all and (max-width:30em) {.ajcol {width: 100%;float:none;}}</style><div class="ajcol"><img style="object-fit: contain;" id="caption-img" src=';
 	      var HTML_part2 = '></div><div class="ajcol" style="line-height: 120%;"><div style="padding: 1em"><p><i>'; //Title
-	      var HTML_part3 = '</i></p><p>'; //artist
-	      var HTML_part4 = '</p><p>'; //culture
-	      var HTML_part5 = '</p><p><i>'; //century
-	      var HTML_part6 = '</i></p>'; // sourcelink
+				var HTML_part3 = '</i><sub> by '; //artist
+	      var HTML_part4 = '</sub></p><p>'; //culture
+	      var HTML_part5 = '<sub> culture</sub></p><p><i>'; //century
+	      var HTML_part6 = '</i><sub> date</p>'; // sourcelink
 	      var HTML_part7 = '<p><a href="' + Sourcelink + '" target="_blank">' + Sourcelink + '</a><sub>source</sub></p><p><em>'; //wiki_blurb
 	      var HTML_part8 = '</em></p>'; //wikilink
 	      var HTML_part9 = '<p><a href = "https://en.wikipedia.org/?curid=' + Wikilink + '" target="_blank">https://en.wikipedia.org/?curid=' + Wikilink + '</a><sub> wiki-link</sub></p>'; //creditline
@@ -320,37 +320,6 @@ $(document).ready( function(){
 	      }
 	      var parts7To10 = HTML_part7 + Wiki_blurb + HTML_part8 + HTML_part9 + creditline + HTML_part10 + HTML_end;
 	      var newData = parts1To4 + parts7To10;
-				var userId;
-				firebase.auth().onAuthStateChanged(function(user) {
-		        if (user) {
-		            userId = user.uid;
-
-		            console.log("signed in");
-		            $('#sign-in').html('Sign out');
-		            $('#sign-in').click(function() {
-		                signOut();
-		                $.magnificPopup.close();
-		            });
-
-		        } else {
-		            // No user is signed in.
-		            $('#sign-in').html('Sign in');
-		            console.log("not signed in");
-		        }
-		    });
-
-				var views;
-				var database = firebase.database().ref('users/' + userId + '/viewCount');
-	 		 	database.on('value', function(snapshot) {
-	 			 views = snapshot.val();
-	 		 	});
-				var updated_views = views+1;
-				console.log("new views:" + updated_views);
-				console.log("used id is: " + userId);
-				firebase.database().ref('users/' + userId).update({
-					viewCount: updated_views
-		    });
-
 
 	      mfpResponse.data = newData;
 	      //console.log('Ajax content loaded:', mfpResponse.data);
