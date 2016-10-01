@@ -1,4 +1,14 @@
+// Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCFvZM-io7AWOKZLwaXN13laMjamcCXsiY",
+    authDomain: "u-seum.firebaseapp.com",
+    databaseURL: "https://u-seum.firebaseio.com",
+    storageBucket: "",
+    messagingSenderId: "870561197845"
+  };
+  firebase.initializeApp(config);
 
+var database = firebase.database();
 var user = firebase.auth().currentUser;
 console.log("user is :" + user);
 
