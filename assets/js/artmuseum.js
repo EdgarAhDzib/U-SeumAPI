@@ -345,6 +345,8 @@ $(document).ready( function(){
 	 			 views = snapshot.val();
 	 		 	});
 				var updated_views = views+1;
+				console.log("new views:" + updated_views);
+				console.log("used id is: " + userId);
 				firebase.database().ref('users/' + userId).update({
 					viewCount: updated_views
 		    });
