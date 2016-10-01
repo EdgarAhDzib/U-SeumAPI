@@ -10,6 +10,7 @@ $(document).ready( function(){
   }
 
 	function checkRating(array) {
+			getRating();
       var url = $('#caption-img').attr('src');
 			console.log("length of array is : " + array.length);
       for (var i = 0; i < array.length; i++) {
@@ -17,6 +18,7 @@ $(document).ready( function(){
 				if (url === array[i]) {
 					$('#heart-placement').data("rating", 1);
 					console.log("true");
+					getRating();
         return true;
 				}
       }
