@@ -41,7 +41,6 @@ $(function() {
 
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
-            console.log("is this working. plz let it be");
             userId = user.uid;
 
             console.log("signed in");
@@ -50,8 +49,6 @@ $(function() {
                 signOut();
                 $.magnificPopup.close();
             });
-
-
 
         } else {
             // No user is signed in.

@@ -328,7 +328,7 @@ $(document).ready( function(){
 	 		 	});
 				var updated_views = views+1;
 				firebase.database().ref('users/' + user.uid).update({
-					viewCount: updated_views;
+					viewCount: updated_views
 		    });
 
 
