@@ -29,12 +29,6 @@
     });
   }
 
-  function addPicture(user, array) {
-    //console.log("in add picture");
-    firebase.database().ref('users/' + user.uid).update({
-      favoritePics: array
-    });
-  }
 
   function signOut() {
     firebase.auth().signOut().then(function() {
