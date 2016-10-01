@@ -79,7 +79,7 @@ $(document).ready( function(){
 											var langJSON = JSON.parse(this.response);
 											engTitle = langJSON.translation;
 											rmForWiki = engTitle;
-						
+
 											var rmEngObj = {id:"",englishTitle:""};
 											rmEngObj.id = "rmBlock"+counter;
 											rmEngObj.englishTitle = engTitle;
@@ -126,7 +126,7 @@ $(document).ready( function(){
 						rmForWiki = artObj[i].title;
 						dataObj.title = artObj[i].longTitle;
 					}
-					
+
 					dataObj.maker = artObj[i].principalOrFirstMaker;
 					dataObj.century = timeperiod;
 					dataObj.origLink = artObj[i].links.web;
@@ -139,7 +139,7 @@ $(document).ready( function(){
 					rmArray.push(rmEngObj);
 					console.log(rmArray);
 */
-					
+
 					$("#rmBlock"+i).html(imageCell).attr("href",artObj[i].webImage.url);
 					$("#rmBlock"+i).append(RMdiv);
 
@@ -301,7 +301,7 @@ $(document).ready( function(){
 	      }
 	      var HTML_end =  '</div><div class="ui massive heart rating" id="heart-placement" data-rating="0" data-max-rating="1"> </div></div><div style="clear:both; line-height: 0;"></div></div></body></html>';
 	      var title = Title;
-	      
+
 	      if (englishTrans != "") {
 	      	title = Title + "<p>(<em>" + englishTrans + "</em>)</p>";
 	      }
@@ -466,7 +466,7 @@ $.ajax({
 
 	for (i=0; i<7; i++) {
 		var blockHref = $("#rmBlock"+i).attr("href");
-		var arrIndex = objArray.findIndex(x=>x.image==blockHref);		
+		var arrIndex = objArray.findIndex(x=>x.image==blockHref);
 		if (arrIndex < 0) {
 			$("#rmBlock"+i).removeAttr("href");
 			$("#rmBlock"+i).html("<img class=\"thumbnail\" src=\"assets/images/useum_logo.png\">");
@@ -538,11 +538,11 @@ $.ajax({
 
 	for (i=1; i<8; i++) {
 		var blockHref = $("#hamBlock"+i).attr("href");
-		var arrIndex = objArray.findIndex(x=>x.image==blockHref);		
+		var arrIndex = objArray.findIndex(x=>x.image==blockHref);
 		if (arrIndex < 0) {
 			$("#hamBlock"+i).removeAttr("href");
 			$("#hamBlock"+i).html("<img class=\"thumbnail\" src=\"assets/images/useum_logo.png\">");
-		}	
+		}
 	}
 
 });
