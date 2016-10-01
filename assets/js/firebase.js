@@ -125,6 +125,10 @@ $(function() {
       $('#viewCount').html(currentSnap.val().viewCount);
       $('#timeSpent').html(currentSnap.val().timeSpent);
 
+      var bioImage = $('<img class="ui fluid large image" src="">').attr("src", currentSnap.val().bioPic);
+
+      $('#bioImage').append(bioImage);
+
       // This returns an object of the pictures
       var pictureData = currentSnap.val().favoritePics;
       //console.log(pictureData);
