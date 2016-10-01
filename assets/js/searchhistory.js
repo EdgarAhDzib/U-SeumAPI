@@ -1,6 +1,28 @@
 
-var user = firebase.auth().currentUser;
+var user;
 console.log("user is :" + user);
+
+firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+        console.log("is this working. plz let it be");
+        user =  = firebase.auth().currentUser;
+
+        console.log("signed in");
+        $('#sign-in').html('Sign out');
+        $('#sign-in').click(function() {
+            signOut();
+            $.magnificPopup.close();
+        });
+
+
+
+    } else {
+        // No user is signed in.
+        $('#sign-in').html('Sign in');
+        console.log("not signed in");
+    }
+});
+
 
 firebase.database().ref().once("value", function(snapshot) {
 
