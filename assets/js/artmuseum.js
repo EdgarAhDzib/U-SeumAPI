@@ -320,9 +320,27 @@ $(document).ready( function(){
 	      }
 	      var parts7To10 = HTML_part7 + Wiki_blurb + HTML_part8 + HTML_part9 + creditline + HTML_part10 + HTML_end;
 	      var newData = parts1To4 + parts7To10;
+				var userId;
+				firebase.auth().onAuthStateChanged(function(user) {
+		        if (user) {
+		            userId = user.uid;
+
+		            console.log("signed in");
+		            $('#sign-in').html('Sign out');
+		            $('#sign-in').click(function() {
+		                signOut();
+		                $.magnificPopup.close();
+		            });
+
+		        } else {
+		            // No user is signed in.
+		            $('#sign-in').html('Sign in');
+		            console.log("not signed in");
+		        }
+		    });
 
 				var views;
-				var database = firebase.database().ref('users/' + user.uid + '/viewCount');
+				var database = firebase.database().ref('users/' + userId + '/viewCount');
 	 		 	database.on('value', function(snapshot) {
 	 			 views = snapshot.val();
 	 		 	});
