@@ -48,6 +48,7 @@
 
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
+          console.log("is this working. plz let it be");
           userId = user.uid;
           console.log("signed in");
           $('#sign-in').html('Sign out');
