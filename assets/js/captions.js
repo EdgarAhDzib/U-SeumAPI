@@ -3,7 +3,8 @@ $(document).ready( function(){
 	var database;
 
 	function addPicture(user, array) {
-    //console.log("in add picture");
+    console.log("user is :" + user);
+		console.log("array is :" + array);
     firebase.database().ref('users/' + user.uid).update({
       favoritePics: array
     });
