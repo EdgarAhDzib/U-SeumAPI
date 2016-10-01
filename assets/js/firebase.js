@@ -20,22 +20,22 @@
       profile_picture : imageUrl,
       firstName: fName,
       joinDate: jDate,
-      shortBio: "short",
-      timeSpent: 0,
-      viewCount: 0,
-      longBio: "long",
-      friendCount: 0,
-      favCount: 0
+      shortBio: sBio,
+      timeSpent: tSpent,
+      viewCount: vCount,
+      longBio: lBio,
+      friendCount: fCount,
+      favCount: favCount
     });
   }
-  /*
+
   function addPicture(user, array) {
-    console.log("in add picture");
+    //console.log("in add picture");
     firebase.database().ref('users/' + user.uid).update({
       favoritePics: array
     });
   }
-  */
+
   function signOut() {
     firebase.auth().signOut().then(function() {
       // Sign-out successful.
@@ -44,14 +44,25 @@
     });
   }
 
-
-
     $(function () {
 
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
 
+          // Retrieves favorite pictures from saved list & adds a new one. Basically everytime we would hit the like button it would call this function.
+          database = firebase.database().ref('users/' + user.uid + '/favoritePics');
+          database.on('value', function(snapshot) {
+            array = snapshot.val();
+            console.log("array is: " + array);
+            //return array;
+          });
+
+          var pics = [];
+          console.log("pics");
           userID = user.uid;
+          pics.push("http://lh4.ggpht.com/NwCWmjro4h__Ord5RqicIJsJbTY104UditPHR-swB9a7pQRt67KfneX_tBEazLnkNGsWqCvfsZam8Pxj1Ixiqbne7Q=s0");
+          addPicture(user,pics);
+
 
           console.log("signed in");
           $('#sign-in').html('Sign out');
@@ -76,7 +87,6 @@
     		focus: '#username',
     		modal: true
     	});
-
       $('#signup-button').click(function(){
         var email = $('#email-signup').val();
         var password = $('#password-signup').val();
@@ -119,5 +129,48 @@
 
         $.magnificPopup.close();
       });
+
+
+      firebase.database().ref().once("value", function(snapshot) {
+
+        // Account settings page
+        // Let's find the user's data saved in the database
+        var currentSnap = snapshot.child("/users/" + userId);
+
+        $('#cardName').html(currentSnap.val().firstName);
+        $('#joinDate').html("Joined: " + currentSnap.val().joinDate);
+        $('#shortBio').html(currentSnap.val().shortBio);
+        $('#friendCount').html('<i class="user icon"></i>' + currentSnap.val().friendCount + " Friends");
+        $('#longBio').html(currentSnap.val().longBio);
+        $('#favCount').html(currentSnap.val().favCount);
+        $('#viewCount').html(currentSnap.val().viewCount);
+        $('#timeSpent').html(currentSnap.val().timeSpent);
+
+        // This returns an object of the pictures
+        var pictureData = currentSnap.val().favoritePics;
+        //console.log(pictureData);
+
+        // Convert to an array
+        var picArray = Object.keys(pictureData).map(function (key) {
+          return pictureData[key];
+        });
+        //console.log(picArray);
+
+        //TODO: Loop through the picures in the array and display them on the screen
+        //
+        for ( var i = 0; i < picArray.length; i++ ) {
+
+          var displayElement = $('<div class="column">');
+          var displayPic = $('<img class="ui fluid large image" src="">').attr("src", picArray[i]);
+
+          displayElement.append(displayPic);
+          $('#favoritePics').append(displayElement);
+
+        }
+
+    }, function(errorObject) {
+        console.log("The read failed: " + errorObject.code);
+    });
+
 
     });
