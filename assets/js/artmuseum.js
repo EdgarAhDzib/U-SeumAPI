@@ -12,8 +12,9 @@ $(document).ready( function(){
 	var Wikilink = "";
 	var New_image = "";
 	var Collection_info = "";
-	var RM = false;
+	var englishTrans = "";
 	var objArray = [];
+	var rmArray = [];
 	autoload();
 
 	function parse_title(string) {
@@ -27,7 +28,7 @@ $(document).ready( function(){
 
 	function autoload() {
 		var query = "";
-		var topics = ["Egyptian","Roman","Classical","African","Native American","Celtic","Japan","Greek"];
+		var topics = ["Egyptian","Roman","Classical","African","Native American","Celtic","Mask","Japan","Greek"];
 		var random = Math.floor(Math.random() * topics.length);
 		query = topics[random];
 		var RMapiKey = "T6Z2QzWq";
@@ -41,12 +42,71 @@ $(document).ready( function(){
 			url: RMurl,
 			method: 'GET',
 		}).done(function(result) {
-			RM = true;
 			var listLength = result.artObjects.length;
 			var artObj = result.artObjects;
 			for (i=0; i<listLength; i++) {
 				var dataObj = {id:"", image:"", title:"", maker:"", culture:"", century:"", museum:"", collection:"", origLink:"", wikiExtract:"", wikiUrl:""};
 				if (artObj[i].hasImage === true && artObj[i].webImage != null) {
+					//console.log(artObj[i]);
+
+				var engTitle = "";
+				var rmForWiki = "";
+
+				function checkIfDutch() {
+					var xhr = new XMLHttpRequest();
+					var rijksText = artObj[i].title;
+					var counter = i;
+					var string = '{"text":"' + encodeURI(rijksText) + '"}';
+
+					xhr.onreadystatechange = function() {
+						if (this.readyState == 4 && (this.status === 200 || this.status === 0)) {
+							var origStr = this.response;
+							var getJSON = JSON.parse(origStr);
+							//console.log(rijksText);
+							//console.log(getJSON);
+
+							var testLangOne = getJSON.result[0].language.languageCode;
+							if (getJSON.result.length > 1) {
+								var testLangTwo = getJSON.result[1].language.languageCode;
+							}
+
+								if (testLangOne == "nl" || testLangTwo == "nl") {
+									var xmlreq = new XMLHttpRequest();
+									var dutchText = rijksText;
+									var textToEng = '{"text":"' + encodeURI(dutchText) + '", "from":"dut", "to":"eng"}';
+									xmlreq.onreadystatechange = function() {
+										if (this.readyState == 4 && (this.status === 200 || this.status === 0)) {
+											var langJSON = JSON.parse(this.response);
+											engTitle = langJSON.translation;
+											rmForWiki = engTitle;
+						
+											var rmEngObj = {id:"",englishTitle:""};
+											rmEngObj.id = "rmBlock"+counter;
+											rmEngObj.englishTitle = engTitle;
+											rmArray.push(rmEngObj);
+											//console.log(rmArray);
+
+											wikipedia(rmForWiki,$("#rmBlock"+counter));
+										}
+									}
+									xmlreq.open("POST", "https://lc-api.sdl.com/translate", true);
+									xmlreq.setRequestHeader("Content-Type", "application/json");
+									xmlreq.setRequestHeader("Authorization", "LC apiKey=aNjUS2PHMA3Rgg8qpYqJ8w%3D%3D");
+									xmlreq.send(textToEng);
+								}
+						}
+
+					}
+					xhr.open("POST", "https://lc-api.sdl.com/detect-language", true);
+					xhr.setRequestHeader("Content-Type", "application/json");
+					xhr.setRequestHeader("Authorization", "LC apiKey=aNjUS2PHMA3Rgg8qpYqJ8w%3D%3D");
+					xhr.send(string);
+
+					return false;
+
+					}
+					checkIfDutch();
+
 					var RMdiv = $("<div>");
 					RMdiv.attr("class","hide");
 					$(RMdiv).attr("data-title",artObj[i].title);
@@ -61,18 +121,31 @@ $(document).ready( function(){
 					imageCell.attr("src",artObj[i].webImage.url);
 					dataObj.id = "rmBlock"+i;
 					dataObj.image = artObj[i].webImage.url;
-					dataObj.title = artObj[i].longTitle;
+					//console.log(engTitle);
+					if (engTitle == "") {
+						rmForWiki = artObj[i].title;
+						dataObj.title = artObj[i].longTitle;
+					}
+					
 					dataObj.maker = artObj[i].principalOrFirstMaker;
 					dataObj.century = timeperiod;
 					dataObj.origLink = artObj[i].links.web;
 					dataObj.museum = "Rijksmuseum, The Netherlands";
 					objArray.push(dataObj);
+
+/*
+					var titleForArray = langJSON.translation;
+					rmEngObj.englishTitle = titleForArray;
+					rmArray.push(rmEngObj);
+					console.log(rmArray);
+*/
+					
 					$("#rmBlock"+i).html(imageCell).attr("href",artObj[i].webImage.url);
 					$("#rmBlock"+i).append(RMdiv);
 
 					$(".hide").hide();
 
-					wikipedia(artObj[i].title,RMdiv);
+					wikipedia(rmForWiki,RMdiv);
 
 				}
 			}
@@ -149,6 +222,14 @@ $(document).ready( function(){
 
 	var thisId = $(this).attr("id");
 	var arrIndex = objArray.findIndex(x=>x.id==thisId);
+	var rmIndex = rmArray.findIndex(x=>x.id==thisId);
+
+	if (rmIndex >= 0) {
+		englishTrans = rmArray[rmIndex].englishTitle;
+	} else {
+		englishTrans = "";
+	}
+
 	//console.log(arrIndex);
 	if (arrIndex >= 0) {
 	New_image = objArray[arrIndex].image;
@@ -177,12 +258,6 @@ $(document).ready( function(){
 		Collection_info = "";
 	}
 
-	if (Creditline == "Rijksmuseum, The Netherlands") {
-		RM = true;
-	} else {
-		RM = false;
-	}
-
 	Creditline = objArray[arrIndex].museum;
 	Sourcelink = objArray[arrIndex].origLink;
 
@@ -209,30 +284,32 @@ $(document).ready( function(){
 	      // You may modify it to change contents of the popup
 	      // For example, to show just #some-element:
 	      // mfpResponse.data = $(mfpResponse.data).find('#some-element');
-	``
 	      // mfpResponse.data must be a String or a DOM (jQuery) element
 	      var HTML_part1 = '<!DOCTYPE html><html><head><meta charset="utf-8"><title>captions</title><script src="assets/js/captions.js"></script></head><body><div class="ajax-text-and-image white-popup-block"><style>.ajax-text-and-image {max-width:800px; margin: 20px auto; background: #FFF; padding: 0; line-height: 0;}.ajcol {width: 50%; float:left;}.ajcol img {width: 100%; height: auto;}@media all and (max-width:30em) {.ajcol {width: 100%;float:none;}}</style><div class="ajcol"><img style="object-fit: contain;" src=';
 	      var HTML_part2 = '></div><div class="ajcol" style="line-height: 120%;"><div style="padding: 1em"><p><i>'; //Title
-	      var HTML_part3 = '</i><sub> by '; //artist
-	      var HTML_part4 = '</sub></p><p>'; //culture
-	      var HTML_part5 = '<sub> culture</sub></p><p><i>'; //century
-	      var HTML_part6 = '</i><sub> date</p>'; // sourcelink
+	      var HTML_part3 = '</i></p><p>'; //artist
+	      var HTML_part4 = '</p><p>'; //culture
+	      var HTML_part5 = '</p><p><i>'; //century
+	      var HTML_part6 = '</i></p>'; // sourcelink
 	      var HTML_part7 = '<p><a href="' + Sourcelink + '" target="_blank">' + Sourcelink + '</a><sub>source</sub></p><p><em>'; //wiki_blurb
-	      var HTML_part8 = '</em><sub>summary</sub></p>'; //wikilink
+	      var HTML_part8 = '</em></p>'; //wikilink
 	      var HTML_part9 = '<p><a href = "https://en.wikipedia.org/?curid=' + Wikilink + '" target="_blank">https://en.wikipedia.org/?curid=' + Wikilink + '</a><sub> wiki-link</sub></p>'; //creditline
-	      var HTML_part10 = '<p><sub> credit</sub></p>';
+	      var HTML_part10 = '<p></p>';
 
 	      if (Collection_info != "") {
-	      	HTML_part10 += '<p>' + Collection_info + '</p><p><sub> collection</sub></p>';
+	      	HTML_part10 += '<p>' + Collection_info + '</p>';
 	      }
 	      var HTML_end =  '</div><div class="ui massive heart rating" id="heart-placement" data-rating="0" data-max-rating="1"> </div></div><div style="clear:both; line-height: 0;"></div></div></body></html>';
-// Add the Collection to this code
 	      var title = Title;
+	      
+	      if (englishTrans != "") {
+	      	title = Title + "<p>(<em>" + englishTrans + "</em>)</p>";
+	      }
+
 	      var artist = Artist;
 	      var culture = Culture;
 	      var century = Century;
 	      var creditline = Creditline;
-		  RM = false;
 
 	      var parts1To4 = HTML_part1 + New_image + HTML_part2 + title + HTML_part3 + artist + HTML_part4;
 	      if (Culture != "") {
@@ -289,18 +366,70 @@ var HAMapiKey = "f5d56a80-7c49-11e6-b2ae-0fcc14970146";
 var HAMurl = "http://api.harvardartmuseums.org/object?q=" + query + "&apikey=" + HAMapiKey;
 
 objArray = [];
+rmArray = [];
 
 $.ajax({
 	url: RMurl,
 	method: 'GET',
 }).done(function(result) {
-	//console.log("in RM");
-	RM = true;
 	var listLength = result.artObjects.length;
 	var artObj = result.artObjects;
 	for (i=0; i<listLength; i++) {
 		var dataObj = {id:"", image:"", title:"", maker:"", culture:"", century:"", museum:"", collection:"", origLink:"", wikiExtract:"", wikiUrl:""};
+		var rmEngObj = {id:"",englishTitle:""};
 		if (artObj[i].hasImage === true && artObj[i].webImage != null) {
+
+				var engTitle = "";
+				var rmForWiki = "";
+
+				function checkIfDutch() {
+					var xhr = new XMLHttpRequest();
+					var rijksText = artObj[i].title;
+					var searchCounter = i;
+					var string = '{"text":"' + encodeURI(rijksText) + '"}';
+
+					xhr.onreadystatechange = function() {
+						if (this.readyState == 4 && (this.status === 200 || this.status === 0)) {
+							var origStr = this.response;
+							var getJSON = JSON.parse(origStr);
+							var testLangOne = getJSON.result[0].language.languageCode;
+							if (getJSON.result.length > 1) {
+								var testLangTwo = getJSON.result[1].language.languageCode;
+							}
+
+								if (testLangOne == "nl" || testLangTwo == "nl") {
+									var xmlreq = new XMLHttpRequest();
+									var dutchText = rijksText;
+									var textToEng = '{"text":"' + encodeURI(dutchText) + '", "from":"dut", "to":"eng"}';
+									xmlreq.onreadystatechange = function() {
+										if (this.readyState == 4 && (this.status === 200 || this.status === 0)) {
+											var langJSON = JSON.parse(this.response);
+											engTitle = langJSON.translation;
+											rmForWiki = engTitle;
+											var rmEngObj = {id:"",englishTitle:""};
+											rmEngObj.id = "rmBlock"+searchCounter;
+											rmEngObj.englishTitle = engTitle;
+											rmArray.push(rmEngObj);
+											wikipedia(rmForWiki,$("#rmBlock"+searchCounter));
+										}
+									}
+									xmlreq.open("POST", "https://lc-api.sdl.com/translate", true);
+									xmlreq.setRequestHeader("Content-Type", "application/json");
+									xmlreq.setRequestHeader("Authorization", "LC apiKey=aNjUS2PHMA3Rgg8qpYqJ8w%3D%3D");
+									xmlreq.send(textToEng);
+								}
+						}
+					}
+					xhr.open("POST", "https://lc-api.sdl.com/detect-language", true);
+					xhr.setRequestHeader("Content-Type", "application/json");
+					xhr.setRequestHeader("Authorization", "LC apiKey=aNjUS2PHMA3Rgg8qpYqJ8w%3D%3D");
+					xhr.send(string);
+
+					return false;
+
+					}
+					checkIfDutch();
+
 			var RMdiv = $("<div>");
 			RMdiv.attr("class","hide");
 			$(RMdiv).attr("data-title",artObj[i].title);
@@ -313,6 +442,12 @@ $.ajax({
 
 			dataObj.id = "rmBlock"+i;
 			dataObj.image = artObj[i].webImage.url;
+
+			if (engTitle == "") {
+				rmForWiki = artObj[i].title;
+				dataObj.title = artObj[i].longTitle;
+			}
+
 			dataObj.title = artObj[i].longTitle;
 			dataObj.maker = artObj[i].principalOrFirstMaker;
 			dataObj.century = timeperiod;
@@ -324,7 +459,7 @@ $.ajax({
 
 			$(".hide").hide();
 
-			wikipedia(artObj[i].title,RMdiv);
+			wikipedia(rmForWiki,$("#rmBlock"+i));
 
 		}
 	}
@@ -416,6 +551,22 @@ return false;
 
 }; //end of click function
 
+/*
+$.ajax({
+	curl -X POST -H "Content-type: application/json" -H
+	"Authorization: LC apiKey=aNjUS2PHMA3Rgg8qpYqJ8w%3D%3D"
+	https://lc-api.sdl.com/detect-language -d
+	-d '{"text":"Hello Developers", "from":"eng", "to":"nl"}' //could be dut
+	Content-type: application/json
+	url: "https://lc-api.sdl.com/translate"
+	"http://api.harvardartmuseums.org/object?q=" + query + "&apikey=" + HAMapiKey;
+	//beforeSend: function(xhr){xhr.setRequestHeader('X-Test-Header', 'test-value');},
+	method: 'POST',
+}).done(function(result) {
+
+});
+*/
+
 function wikipedia(argument,div) {
 	var wikiTopic = "https://en.wikipedia.org/w/api.php?action=query&format=json&gsrlimit=5&generator=search&origin=*&gsrsearch=" + argument + "&prop=extracts&exintro&explaintext&exsentences=1";
 		//console.log(wikiTopic);
@@ -429,13 +580,14 @@ function wikipedia(argument,div) {
 				if (wikiLinks[value].extract) {
 					//console.log("This extract (if.extract): " + wikiLinks[value].extract);
 					//console.log("https://en.wikipedia.org/?curid=" + wikiLinks[value].pageid);
-					var wikiExtract = "<div class=\"wikiExtract\" data-extract=\"" + wikiLinks[value].extract + "\">" + wikiLinks[value].extract + "<br></div>";
-					var wikiUrl = "<div class=\"wikiUrl\" data-wiki=\"" + wikiLinks[value].pageid + "\"><a href = \"https://en.wikipedia.org/?curid=" + wikiLinks[value].pageid + "\" target = \"_blank\" >https://en.wikipedia.org/?curid=" + wikiLinks[value].pageid + "</a></div>";
+					var wikiExtract = "<div class=\"wikiExtract hide\" style=\"display:none;\" data-extract=\"" + wikiLinks[value].extract + "\">" + wikiLinks[value].extract + "<br></div>";
+					var wikiUrl = "<div class=\"wikiUrl hide\" style=\"display:none;\" data-wiki=\"" + wikiLinks[value].pageid + "\"><a href = \"https://en.wikipedia.org/?curid=" + wikiLinks[value].pageid + "\" target = \"_blank\" >https://en.wikipedia.org/?curid=" + wikiLinks[value].pageid + "</a></div>";
 					div.append(wikiExtract).append(wikiUrl);
 					//console.log(RMdiv);
 				}
 			};
 		} else {
+			console.log(query);
 			$.getJSON("https://en.wikipedia.org/w/api.php?action=query&format=json&gsrlimit=5&generator=search&origin=*&gsrsearch=" + query + "&prop=extracts&exintro&explaintext&exsentences=1", function(jsonData){
 					//console.log(jsonData);
 			if (jsonData.query) {
@@ -444,8 +596,8 @@ function wikipedia(argument,div) {
 					if (wikiLinks[value].extract) {
 						//console.log("This extract (for query): " + wikiLinks[value].extract);
 						//console.log("https://en.wikipedia.org/?curid=" + wikiLinks[value].pageid);
-						var wikiExtract = "<div class=\"wikiExtract\" data-extract=\"" + wikiLinks[value].extract + "\">" + wikiLinks[value].extract + "<br></div>";
-						var wikiUrl = "<div class=\"wikiUrl\" data-wiki=\"" + wikiLinks[value].pageid + "\"><a href = \"https://en.wikipedia.org/?curid=" + wikiLinks[value].pageid + "\" target = \"_blank\" >https://en.wikipedia.org/?curid=" + wikiLinks[value].pageid + "</a></div>";
+						var wikiExtract = "<div class=\"wikiExtract hide\" style=\"display:none;\" data-extract=\"" + wikiLinks[value].extract + "\">" + wikiLinks[value].extract + "<br></div>";
+						var wikiUrl = "<div class=\"wikiUrl hide\" style=\"display:none;\" data-wiki=\"" + wikiLinks[value].pageid + "\"><a href = \"https://en.wikipedia.org/?curid=" + wikiLinks[value].pageid + "\" target = \"_blank\" >https://en.wikipedia.org/?curid=" + wikiLinks[value].pageid + "</a></div>";
 						div.append(wikiExtract).append(wikiUrl);
 						//console.log(RMdiv);
 					}
@@ -454,6 +606,7 @@ function wikipedia(argument,div) {
 		});
 	}
 });
-}
+
+} //end of wikipedia function
 
 }); //end of document ready
