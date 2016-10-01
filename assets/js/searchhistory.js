@@ -10,6 +10,7 @@
 
 var database = firebase.database();
 var user = firebase.auth().currentUser;
+console.log("user is :" + user);
 
 firebase.database().ref().once("value", function(snapshot) {
 
