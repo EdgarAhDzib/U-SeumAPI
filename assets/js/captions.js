@@ -52,9 +52,9 @@ $(document).ready( function(){
 		 database.once('value', function(snapshot) {
 			 array = snapshot.val();
 			 //checkRating(array);
-			 console.log("favorite pics list: " + array);
 			 //return array;
 		 });
+		 console.log("favorite pics list: " + array);
 		 var updated_list = array;
 		 updated_list.push(url);
 		 addPicture(user,updated_list);
