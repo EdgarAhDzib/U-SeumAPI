@@ -1,4 +1,3 @@
-var database = firebase.database();
 var userId = user.uid;
 firebase.database().ref().once("value", function(snapshot) {
 
