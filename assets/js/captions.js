@@ -35,7 +35,7 @@ $(document).ready( function(){
 		 database = firebase.database().ref('users/' + user.uid + '/favoritePics');
 		 database.once('value', function(snapshot) {
 			 array = snapshot.val();
-			 console.log("favorite pics list: " + array);
+			 //console.log("favorite pics list: " + array);
 			 checkRating(array);
 			 //return array;
 		 });
@@ -58,6 +58,7 @@ $(document).ready( function(){
 		 var updated_list = array;
 		 updated_list.push(url);
 		 */
+		 console.log("updating");
 		 firebase.database().ref('users/' + user.uid).update({
        favoritePics: array
      });
