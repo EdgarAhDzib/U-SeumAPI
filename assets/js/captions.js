@@ -18,10 +18,9 @@ $(document).ready( function(){
 					$('#heart-placement').data("rating", 1);
 					console.log("true");
         return true;
-			} else {
-				return false;
-			}
+				}
       }
+			return false;
 
   }
 
