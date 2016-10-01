@@ -10,15 +10,15 @@ $(document).ready( function(){
   }
 
 	function checkRating(array) {
-			getRating();
+			//getRating();
       var url = $('#caption-img').attr('src');
 			console.log("length of array is : " + array.length);
       for (var i = 0; i < array.length; i++) {
 				console.log("array value " + i + " is " + array[i]);
 				if (url === array[i]) {
-					$('#heart-placement').data("rating", 1);
+					$('.icon').addClass("active");
 					console.log("true");
-					getRating();
+					//getRating();
         return true;
 				}
       }
