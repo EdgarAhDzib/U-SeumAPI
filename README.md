@@ -1,18 +1,8 @@
-# U-SeumAPI
-
-## What is U-seum?
+# U-SEUM
+## What is U-SEUM?
+U-Seum is a powerful application to search for art across multiple museum databases.
 
 ## Best way to use U-seum!
-
-## Trello
-
-[U-Seum Trello Board](https://trello.com/artmuseumapi)
-
-#### Important notes
-
-We should use a priority system to help us communicate and manage what is important to the project. A simple break-down of what the labels represent are as follows:
-
-* Labels
-  * Red - High Priorty
-  * Yellow - Normal Priority
-  * Green - Low Priority
+Create an account, enter a search word and explore artwork from all over the world right at your finger tips.
+Click a picture to expand it full-size and get more information about the piece including time periods, culture, a description of the work
+and a link to the original source if available.
