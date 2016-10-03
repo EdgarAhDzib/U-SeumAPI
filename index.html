@@ -110,22 +110,27 @@
                                     </div>
                                   </h2>
                                   <form class="ui large form">
-                                    <div class="ui stacked segment">
-                                      <div class="field">
-                                        <div class="ui left icon input">
-                                          <i class="user icon"></i>
-                                          <input type="text" name="email" placeholder="E-mail address" id="email-field">
+                                    <div class="ui segment">
+                                        <div class="ui form">
+                                          <div class="two fields">
+                                            <div class="field">
+                                              <label>email</label>
+                                              <input placeholder="email" id="email-signup" type="text">
+                                            </div>
+                                            <div class="field">
+                                              <label>password</label>
+                                              <input placeholder="password" id="password-signup" type="text">
+                                            </div>
+                                          </div>
+                                          <div class="inline field">
+                                            <div class="ui checkbox">
+                                                <input type="checkbox" name="terms-n-conditions">
+                                                <label>I agree to the terms and conditions.</label>
+                                              </div>
+                                          </div>
+                                          <div class="ui button" id="signup-button">Submit</div>
                                         </div>
                                       </div>
-                                      <div class="field">
-                                        <div class="ui left icon input">
-                                          <i class="lock icon"></i>
-                                          <input type="password" name="password" placeholder="Password" id="password-field">
-                                        </div>
-                                      </div>
-                                      <div class="ui fluid large teal button popup-modal-dismiss" id="login-button" href="#">Login</div>
-                                      <div class="ui teal segment"><a class="popup-modal-dismiss" href="#">I don't want to login</a></div>
-                                    </div>
 
                                     <div class="ui error message"></div>
 
